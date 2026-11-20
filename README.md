@@ -80,3 +80,23 @@ albo edytuj skrypty bezpośrednio w Roblox Studio po imporcie.
 - Bramki A1–A4: X = −150/−50/50/150, Z = 260
 
 Miłej zabawy! ✈️
+
+---
+
+# NEW + Nowy projekt w repo: POLSKIE MIASTA - gra Unity
+
+Wielki świat z **5 miastami** (Kasztanowice, Sloneczny Brzeg - bardzo duze z plazą i morzem,
+Solina, Bialowoda, Krasnogrod - centrum), połączonymi drogami. W każdym mieście:
+**paczkomat 24/7, salon samochodowy, magazyn, domki, latarnie, ruch uliczny**.
+
+Na telefoniku (klawisz **H**):
+- **PACZKI** - wcielaj się w kuriera (bierzesz zlecenie, paczkę z magazynu, dowozisz do
+  paczkomatu, skanujesz, skrytka otwiera się sama - zarabiasz COINS) albo klienta
+  (zamawiasz np. laptopa, dostajesz kod na telefon, wpisujesz w paczkomacie, zabierasz paczkę).
+- **SKLEP** - turbo silnik, stawka kuriera +50%, zloty lakier (za coins).
+- **MAPA** - wszystkie miasta i odległości.
+- **ADMIN** - tylko dla loginu admin / haslo admin123: +1000 coins, odblokowanie aut, telepor.
+
+Aut w salonie: Kasztanka (start za darmo), Solanka, Dostawczak, SlonecznyKabrio, Krasnorower.
+
+**Pełna instrukcja: [Unity/README-Unity.md](Unity/README-Unity.md). Miłej jazdy!**
