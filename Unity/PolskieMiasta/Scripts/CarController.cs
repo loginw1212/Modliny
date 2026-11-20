@@ -34,9 +34,13 @@ namespace Miasta
 
         float GroundY(Vector3 p)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(p + Vector3.up * 3f, Vector3.down, out hit, 10f)) return hit.point.y;
-            return 0f;
+            float best = 0f;
+            foreach (var h in Physics.RaycastAll(p + Vector3.up * 3f, Vector3.down, 12f))
+            {
+                if (h.collider.transform.IsChildOf(transform)) continue;
+                if (h.point.y > best) best = h.point.y;
+            }
+            return best;
         }
 
         public void Enter(PlayerDriver p)

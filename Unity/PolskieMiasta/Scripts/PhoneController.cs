@@ -87,6 +87,12 @@ namespace Miasta
             UIFactory.Btn(tabs.transform, "T_Sklep", "SKLEP", new Color(0.2f, 0.7f, 0.4f), new Vector2(-0.5f * w, -22f), new Vector2(w - 4f, 36f), () => OpenApp("sklep"));
             UIFactory.Btn(tabs.transform, "T_Mapa", "MAPA", new Color(0.3f, 0.5f, 0.9f), new Vector2(0.5f * w, -22f), new Vector2(w - 4f, 36f), () => OpenApp("mapa"));
             UIFactory.Btn(tabs.transform, "T_Admin", "ADMIN", new Color(0.8f, 0.25f, 0.25f), new Vector2(1.5f * w, -22f), new Vector2(w - 4f, 36f), () => OpenApp("admin"));
+            var hideBtn = UIFactory.Btn(phone.transform, "T_Ukryj", "X", new Color(0.5f, 0.2f, 0.2f), Vector2.zero, new Vector2(30f, 30f), () => TogglePhone(), 14);
+            var hrt2 = hideBtn.GetComponent<RectTransform>();
+            hrt2.anchorMin = new Vector2(1f, 1f);
+            hrt2.anchorMax = new Vector2(1f, 1f);
+            hrt2.pivot = new Vector2(1f, 1f);
+            hrt2.anchoredPosition = new Vector2(-4f, -4f);
 
             OpenApp("paczki");
         }

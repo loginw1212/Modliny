@@ -415,26 +415,43 @@ namespace Miasta
             var m = np.AddComponent<Miasta.Paczkomat>();
             m.cityName = cityId;
 
-            Box(np.transform, "Korpus", new Vector3(0f, 1.3f, 0f), new Vector3(2.6f, 2.6f, 0.8f), yellow, Vector3.zero);
-            Box(np.transform, "Baza", new Vector3(0f, 0.15f, 0f), new Vector3(2.9f, 0.3f, 1.1f), dark, Vector3.zero);
-            Box(np.transform, "Ekran", new Vector3(0.7f, 2.2f, 0.42f), new Vector3(1f, 0.7f, 0.06f), dark, Vector3.zero);
-            Box(np.transform, "Pokretlo", new Vector3(-0.7f, 2.2f, 0.42f), new Vector3(0.5f, 0.7f, 0.06f), greenMat(), Vector3.zero);
+            var yellowM = Mat(new Color(0.95f, 0.78f, 0.05f), 0f, 0.4f);
+            var frameM = Mat(new Color(0.18f, 0.19f, 0.21f), 0f, 0.3f);
+            var doorM = Mat(new Color(0.88f, 0.7f, 0.2f), 0.3f, 0.5f);
+            var screenM = Mat(new Color(0.1f, 0.6f, 0.35f), 0f, 0.7f);
+            var pkgM = Mat(new Color(0.8f, 0.6f, 0.15f), 0f, 0.4f);
+            var metalM = Mat(new Color(0.7f, 0.72f, 0.75f), 0.7f, 0.6f);
+
+            Box(np.transform, "Baza", new Vector3(0f, 0.15f, 0.05f), new Vector3(3.7f, 0.3f, 1.4f), frameM, Vector3.zero);
+            Box(np.transform, "Korpus", new Vector3(0f, 1.45f, 0f), new Vector3(3.5f, 2.3f, 0.95f), yellowM, Vector3.zero);
+            Box(np.transform, "Daszek", new Vector3(0f, 2.75f, 0.12f), new Vector3(3.8f, 0.4f, 1.25f), orange, Vector3.zero);
+            Box(np.transform, "Pas_Dolny", new Vector3(0f, 0.5f, 0.01f), new Vector3(3.5f, 0.7f, 1.0f), frameM, Vector3.zero);
+
+            Box(np.transform, "Ekran_Rama", new Vector3(1.05f, 1.95f, 0.5f), new Vector3(1.2f, 0.85f, 0.08f), frameM, Vector3.zero);
+            Box(np.transform, "Ekran", new Vector3(1.05f, 1.95f, 0.56f), new Vector3(1.05f, 0.7f, 0.05f), screenM, Vector3.zero);
+            Text(np.transform, "Napis_247", "24/7", new Vector3(1.05f, 2.52f, 0.5f), 0.26f, new Color(0.1f, 0.1f, 0.12f), Vector3.zero, 44);
+            Text(np.transform, "Napis_Miasto", cityId, new Vector3(1.05f, 1.45f, 0.5f), 0.14f, Color.white, Vector3.zero, 36);
+
+            Box(np.transform, "Pokretlo", new Vector3(1.05f, 0.8f, 0.5f), new Vector3(0.7f, 0.34f, 0.08f), metalM, Vector3.zero);
+
             int i = 0;
-            for (int row = 0; row < 2; row++)
+            for (int row = 0; row < 3; row++)
                 for (int col = 0; col < 4; col++)
                 {
-                    float x = -0.93f + col * 0.62f;
-                    float y = 0.55f + row * 0.75f;
-                    Box(np.transform, "Drzwi_Skrytki_" + i, new Vector3(x, y, 0.44f), new Vector3(0.55f, 0.66f, 0.07f), Mat(new Color(0.88f, 0.7f, 0.2f), 0.3f, 0.5f), Vector3.zero);
-                    var pkg = Box(np.transform, "Paczka_Skrytki_" + i, new Vector3(x, y, 0.15f), new Vector3(0.4f, 0.42f, 0.34f), Mat(new Color(0.8f, 0.6f, 0.15f), 0f, 0.4f), Vector3.zero);
+                    float x = -1.42f + col * 0.6f;
+                    float y = 1.0f + row * 0.6f;
+                    Box(np.transform, "Rama_Skrytki_" + i, new Vector3(x, y, 0.44f), new Vector3(0.56f, 0.56f, 0.05f), frameM, Vector3.zero);
+                    Box(np.transform, "Drzwi_Skrytki_" + i, new Vector3(x, y, 0.5f), new Vector3(0.5f, 0.5f, 0.06f), doorM, Vector3.zero);
+                    Box(np.transform, "Raczka_" + i, new Vector3(x + 0.14f, y, 0.55f), new Vector3(0.1f, 0.26f, 0.05f), frameM, Vector3.zero);
+                    var pkg = Box(np.transform, "Paczka_Skrytki_" + i, new Vector3(x, y, 0.22f), new Vector3(0.36f, 0.34f, 0.3f), pkgM, Vector3.zero);
                     pkg.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
                     pkg.SetActive(false);
                     i++;
                 }
-            Text(np.transform, "Napis", "24/7", new Vector3(0f, 2.75f, 0.15f), 0.35f, darkMatColor(), Vector3.zero, 40);
+
             var col2 = np.AddComponent<BoxCollider>();
-            col2.center = new Vector3(0f, 1.3f, 0.2f);
-            col2.size = new Vector3(3.4f, 3f, 1.8f);
+            col2.center = new Vector3(0f, 1.45f, 0.2f);
+            col2.size = new Vector3(4.0f, 3.2f, 1.9f);
         }
 
         static Color darkMatColor() { return new Color(0.1f, 0.1f, 0.12f); }
