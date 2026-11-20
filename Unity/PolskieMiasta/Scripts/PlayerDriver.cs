@@ -107,7 +107,7 @@ namespace Miasta
             carryingPkg.name = "Paczka_W_Reku";
             carryingPkg.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
             var m = carryingPkg.GetComponent<MeshRenderer>();
-            m.material = new Material(Shader.Find("Standard"));
+            m.material = new Material(LitShader.Get());
             m.material.color = new Color(0.85f, 0.6f, 0.15f);
             carryingPkg.SetActive(false);
         }

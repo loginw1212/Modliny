@@ -65,22 +65,38 @@ namespace Miasta
 
         static Material Mat(Color c, float metal, float smooth)
         {
-            var m = new Material(Shader.Find("Standard"));
+            var m = new Material(LitShader.Get());
             m.color = c;
-            m.SetFloat("_Metallic", metal);
-            m.SetFloat("_Glossiness", smooth);
+            if (m.HasProperty("_Metallic")) m.SetFloat("_Metallic", metal);
+            if (m.HasProperty("_Glossiness")) m.SetFloat("_Glossiness", smooth);
+            if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", smooth);
             return m;
         }
 
         static Material GlassMat(Color c, float alpha)
         {
             var m = Mat(new Color(c.r, c.g, c.b, alpha), 0.6f, 0.8f);
-            m.SetFloat("_Mode", 3f);
-            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            m.SetInt("_ZWrite", 0);
-            m.EnableKeyword("_ALPHABLEND_ON");
-            m.renderQueue = 3000;
+            if (m.HasProperty("_Mode"))
+            {
+                m.SetFloat("_Mode", 3f);
+                m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                m.SetInt("_ZWrite", 0);
+                m.EnableKeyword("_ALPHABLEND_ON");
+                m.renderQueue = 3000;
+            }
+            else if (m.HasProperty("_Surface"))
+            {
+                m.SetFloat("_Surface", 1f);
+                if (m.HasProperty("_Blend")) m.SetFloat("_Blend", 0f);
+                m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                m.EnableKeyword("_ALPHAPREMULTIPLY_OFF");
+                m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                m.SetInt("_ZWrite", 0);
+                if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", 0.8f);
+                m.renderQueue = 3000;
+            }
             return m;
         }
 

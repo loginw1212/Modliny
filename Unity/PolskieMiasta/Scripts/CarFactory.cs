@@ -23,15 +23,15 @@ namespace Miasta
         {
             var np = new GameObject(name);
             if (parent != null) np.transform.SetParent(parent, false);
-            var bodyMat = new Material(Shader.Find("Standard"));
+            var bodyMat = new Material(LitShader.Get());
             bodyMat.color = col;
-            var darkMat = new Material(Shader.Find("Standard"));
+            var darkMat = new Material(LitShader.Get());
             darkMat.color = new Color(0.12f, 0.12f, 0.14f);
-            var wheelMat = new Material(Shader.Find("Standard"));
+            var wheelMat = new Material(LitShader.Get());
             wheelMat.color = new Color(0.08f, 0.08f, 0.08f);
-            var metalMat = new Material(Shader.Find("Standard"));
+            var metalMat = new Material(LitShader.Get());
             metalMat.color = new Color(0.75f, 0.78f, 0.8f);
-            metalMat.SetFloat("_Metallic", 0.8f);
+            if (metalMat.HasProperty("_Metallic")) metalMat.SetFloat("_Metallic", 0.8f);
 
             Body(np.transform, "Karoseria", new Vector3(0f, wid * 0.35f, 0f), new Vector3(wid, wid * 0.7f, len), bodyMat);
             Body(np.transform, "Kabina", new Vector3(0f, wid * 0.75f, roofZ), new Vector3(wid * 0.88f, wid * 0.55f, len * 0.45f), bodyMat);
