@@ -1,2 +1,8 @@
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+*.meta.bak
 *.gz
 __pycache__/

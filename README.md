@@ -1,102 +1,72 @@
-# Lotnisko Modlin (WMI) — projekt do Roblox Studio 🛫
+# POLSKIE MIASTA — gra 3D w Unity 🚗📦
 
-Kompletny, gotowy do grania projekt lotniska Warszawa-Modlin dla Roblox Studio:
-pas startowy 08/26, terminal z rękawami (jet bridge), wieża kontroli, hangar,
-straż pożarna, Boeing 737-800, pojazdy obsługi naziemnej i 10 skryptów systemowych.
+Wielki świat z **5 miastami połączonymi drogami**, w każdym: paczkomat, salon
+samochodowy, magazyn, domki, latarnie, ruch uliczny. W Słonecznym Brzegu jest
+też plaża ze **morzem, wieżowcami i palmami**.
 
-## Szybka instalacja (2 minuty)
+## Miasta
+1. **Kasztanowice**
+2. **Słoneczny Brzeg** (bardzo duże miasto + plaża)
+3. **Solina**
+4. **Białowoda**
+5. **Krasnogród** (centrum mapy — stąd startujesz)
 
-1. Pobierz repo: zielony przycisk **Code → Download ZIP** i rozpakuj.
-2. Otwórz pusty plik (Baseplate) w **Roblox Studio**.
-3. W Explorerze kliknij prawym na **Workspace → Insert From File...** i wybierz `ModlinAirport.rbxmx` — **plik jest już w rozpakowanym ZIP-ie, gotowy!**
-4. Gotowe! Całe lotnisko pojawi się w Workspace razem ze skryptami.
+## JAK WGRAĆ (Unity Hub + Unity 2022.3 LTS)
 
-> `ModlinAirport.rbxmx.gz.b64` + `Odtworz_Model.bat` / `.sh` są potrzebne tylko, gdybyś pobrał pojedyncze pliki zamiast ZIP-a - wtedy na Windows kliknij dwukrotnie **Odtworz_Model.bat** (sam odblokuje PowerShell).
+1. Zainstaluj [Unity Hub](https://unity.com/download) i pobierz wersję **2022.3 LTS** (element "3D Core" wystarczy).
+2. Stwórz nowy projekt **3D (Built-in Render Pipeline)**.
+3. Pobierz repo: zielony przycisk **Code → Download ZIP** i rozpakuj.
+4. Skopiuj folder **`Unity/PolskieMiasta`** do katalogu **`Assets`** projektu
+   (czyli będą ścieżki `Assets/PolskieMiasta/Scripts` i `Assets/PolskieMiasta/Editor`).
+5. Poczekaj aż Unity skompiluje skrypty (bez czerwieni w konsoli).
+6. Menu u góry: **Tools → Polskie Miasta - Zbuduj wielki swiat**. To zbuduje cały świat.
+7. **Ctrl+S** zapisz scenę i wcisnij **PLAY** — grasz!
 
-## Co jest w środku
+## STEROWANIE
+- `W/A/S/D` — chodzenie i jazda autem, `Shift` — bieg
+- `Mysz` — rozglądanie
+- `E` — interakcja (wejście do auta, sprzedawca salonu, magazyn, paczkomat)
+- `H` — pokazywanie/chowanie telefonu
+- `ESC` — zamknięcie okienka
 
-| Element | Opis |
-|---|---|
-| Pas startowy | 1150 studów, znaki, progi, strefy kontaktu, krawędziowe lampki (migają) |
-| Terminal | Budynek z łukowym dachem, **pomarańczowe akcenty (styl Modlin)**, szyba, automatyczne drzwi (E), tablica odlotów, napis **WARSZAWA-MODLIN** |
-| Wieża kontroli | Kabina, radar, migający beacon zielono-biały |
-| Bramki A1–A4 | Stanowiska z czujnikami — tabliczka zmienia się na ZAJĘTA/WOLNA |
-| Rękawy | Jet bridge przy każdej bramce |
-| Samolot | Boeing 737-800 (malowanie WMI: niebieski statecznik, żółte chwty silników), wciągane podwozie i klapy |
-| Pojazdy | Follow-Me, puszback, bagażówka z przyczepą i bagażem, **taśmociąg bagażowy (belt loader)**, tankowóz, **lotniskówka (catering)**, autobus, schody |
-| Obsługa naziemna | Skrypt automatycznie: schody → autobus → bagażówka → tankowóz → taśmociąg → lotniskówka przy bramce A1 |
-| Marshaler | NPC w pomarańczowej kamizelce z lichtenami przy bramce A1 |
-| Pasażerowie | 4 NPC idących na płycie: autotobus ↔ schody ↔ terminal |
-| Oświetlenie | Sekwencja świateł podejściowych (rabbit), PAPI 2/2, krawędź pasa |
-| Otoczenie | Las sosnowy wokół lotniska (45 drzew), zielone pola Mazowsza |
+## JAK GRAĆ
 
-## Sterowanie
+### Salon — klikasz w ludzika i wybierasz auto
+1. Znajdź **SALON SAMOCHODOWY** (szklany budynek z pomarańczowym pasem).
+2. Celuj w **sprzedawcę** (ludzik przy wejściu) i wcisnij **E** — pojawia się menu aut.
+3. **KUP** (za coins) albo **WYBIERZ** — auto pojawia się obok i OD RAZU w nim jedziesz.
 
-**Samolot** (usiądź na siedzeniu pilota na nosie kadłuba):
-- **W / S** — przepustnica (gaz)
-- **A / D** — ster kierunkowy (skręt)
-- Powyżej 85 prędkości = samolot startuje sam (siła nośna)
-- Poniżej 55 prędkości = opada (lądowanie)
-- Czat: `/gear` podwozie, `/flaps` klapy, `/brakes` hamulec, `/reset` wypoziomowanie
+### Kurier — zarabiasz COINS
+1. Telefon (`H`) → **PACZKI** → **JESTEM KURIEREM** → **WEZ ZLECENIE**.
+2. Dojedź do **MAGAZYNU** w wskazanym mieście, celuj w bramę magazynu, **E** → **WEZ PACZKE**.
+3. Paczka jest widoczna przy tobie/na aucie. Dojedź do **PACZKOMATU** w innym mieście.
+4. Przy paczkomacie **E** → **SKANUJ I WSADZ PACZKE** → skrytka otwiera się, paczka wchodzi,
+   zamyka się. **Coins wpadają na konto!**
 
-**Pojazdy naziemne** (usiądź na siedzeniu kierowcy):
-- **W / S** — przód/tył, **A / D** — kierownica
-- Bez kierowcy: Follow-Me i bagażówka jeżdżą automatycznie po swojej trasie patrolowej
+### Klient — zamawiasz paczkę (np. laptopa)
+1. Telefon → **PACZKI** → **JESTEM KLIENTEM** → wybierz np. **Laptop** → **ZAMOW**.
+2. Po ~20–35 s przyjdzie powiadomienie: **"PACZKA DOTARLA! Kod 123456"**.
+3. Idź do paczkomatu swojego miasta, **E**, na klawiaturze wpisz 6-cyfrowy kod → **OK** →
+   skrytka się otwiera → **ZABIERZ PACZKE** → skrytka się zamyka (+20 coins).
 
-**Drzwi terminala**: podejdź i wciśnij **E** — drzwi rozsuwają się automatycznie.
+### Sklep w telefonie
+Turbo silnik (+12 prędkości), stawka kuriera +50%, złoty lakier.
 
-## Struktura repo
+### Admin panel (tylko jeden login!)
+Telefon → **ADMIN**. Login: **admin**, hasło: **admin123**.
+Funkcje: +1000 coins, odblokowanie wszystkich aut, teleport do każdego miasta, wylogowanie.
+Jak zmienić login/hasło: w `Scripts/PhoneController.cs` na samej górze są stałe `ADMIN_LOGIN` i `ADMIN_PASS`.
 
+## PLIKI
 ```
-ModlinAirport.rbxmx      ← GOTOWY MODEL do importu w Roblox Studio (całe lotnisko + skrypty)
-ModlinAirport.rbxmx.gz.b64 ← skompresowana kopia modelu (opcjonalna; rozpakowuje Odtworz_Model.ps1 / .sh)
-Odtworz_Model.bat        ← Windows: odtwarza plik ModlinAirport.rbxmx z kopii .b64 (kliknij dwukrotnie)
-Odtworz_Model.ps1        ← to samo co .bat, wersja PowerShell
-Odtworz_Model.sh         ← Mac/Linux: odtwarza plik ModlinAirport.rbxmx z kopii .b64
-src/                     ← wszystkie skrypty Lua (źródła)
-  Samolot_Lot.server.lua
-  Pojazdy_Sterowanie.server.lua
-  Bramki_System.server.lua
-  Operacje_Naziemne.server.lua
-  Oswietlenie.server.lua
-tools/generate_rbxmx.py  ← generator modelu (zmień skrypty i przegeneruj)
-default.project.json     ← projekt Rojo (opcjonalnie, dla zaawansowanych)
+Unity/PolskieMiasta/Scripts/   — GameManager, telefon, paczkomaty, magazyn, salon, auta, gracz
+Unity/PolskieMiasta/Editor/    — CityWorldBuilder (menu Tools → buduj cały świat)
+Unity/README-Unity.md          — szczegółowa instrukcja
 ```
 
-## Rozbudowa
+## Ważne
+- Świat jest stylizowany (bez fotorealistycznych tekstur) — tekstury można później podmienić na własne (darmowe z itch.io / Unity Asset Store).
+- Jeśli w konsoli Unity pojawi się czerwień (błąd kompilacji) — wklej jej treść, a zostanie poprawiona.
+- Coins i zapis gry trzymane są w PlayerPrefs (postęp zostaje po wyłączeniu gry).
 
-Zmień coś w `src/` i przegeneruj model:
-```bash
-python3 tools/generate_rbxmx.py
-```
-albo edytuj skrypty bezpośrednio w Roblox Studio po imporcie.
-
-## Koordynaty (dla twórców)
-
-- Pas startowy: 1150×45 studów, na osi X (kierunek 08/26)
-- Droga kołowania równoległa: oś Z = 150
-- Płyta postojowa: Z = 190…310
-- Terminal: Z = 330…390
-- Bramki A1–A4: X = −150/−50/50/150, Z = 260
-
-Miłej zabawy! ✈️
-
----
-
-# NEW + Nowy projekt w repo: POLSKIE MIASTA - gra Unity
-
-Wielki świat z **5 miastami** (Kasztanowice, Sloneczny Brzeg - bardzo duze z plazą i morzem,
-Solina, Bialowoda, Krasnogrod - centrum), połączonymi drogami. W każdym mieście:
-**paczkomat 24/7, salon samochodowy, magazyn, domki, latarnie, ruch uliczny**.
-
-Na telefoniku (klawisz **H**):
-- **PACZKI** - wcielaj się w kuriera (bierzesz zlecenie, paczkę z magazynu, dowozisz do
-  paczkomatu, skanujesz, skrytka otwiera się sama - zarabiasz COINS) albo klienta
-  (zamawiasz np. laptopa, dostajesz kod na telefon, wpisujesz w paczkomacie, zabierasz paczkę).
-- **SKLEP** - turbo silnik, stawka kuriera +50%, zloty lakier (za coins).
-- **MAPA** - wszystkie miasta i odległości.
-- **ADMIN** - tylko dla loginu admin / haslo admin123: +1000 coins, odblokowanie aut, telepor.
-
-Aut w salonie: Kasztanka (start za darmo), Solanka, Dostawczak, SlonecznyKabrio, Krasnorower.
-
-**Pełna instrukcja: [Unity/README-Unity.md](Unity/README-Unity.md). Miłej jazdy!**
+Miłej jazdy! 🚗💨
