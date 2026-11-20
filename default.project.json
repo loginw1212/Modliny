@@ -1,0 +1,12 @@
+{
+	"name": "Modliny",
+	"tree": {
+		"$className": "DataModel",
+		"ServerStorage": {
+			"$className": "ServerStorage",
+			"ModlinySrc": {
+				"$path": "src"
+			}
+		}
+	}
+}
