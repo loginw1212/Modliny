@@ -363,16 +363,42 @@ namespace Miasta
                 float dep = 10f + (float)rng.NextDouble() * 8f;
                 var wall = bricks[rng.Next(0, bricks.Length)];
                 float hgt = 5f + (float)rng.NextDouble() * 2.5f;
-                Box(t, "Dom_Sciana_" + placed, new Vector3(x, hgt * 0.25f, z), new Vector3(w, hgt, dep), wall, Vector3.zero);
-                var roofM = new Color(0.7f, 0.2f, 0.2f);
-                if (rng.NextDouble() > 0.8) roofM = new Color(0.3f, 0.3f, 0.6f);
-                Box(t, "Dom_Dach_" + placed, new Vector3(x, hgt + 1.6f, z), new Vector3(w + 1.5f, 3f, dep + 1.5f), Mat(roofM, 0f, 0.3f), new Vector3(0f, 45f, 0f));
-                Box(t, "Dom_Drzwi_" + placed, new Vector3(x, 1.1f, z + dep * 0.5f + 0.1f), new Vector3(1.6f, 2.2f, 0.15f), brickA, Vector3.zero);
+                var roofCol = rng.NextDouble() > 0.8 ? new Color(0.3f, 0.3f, 0.6f) : new Color(0.68f, 0.2f, 0.2f);
+                House(t, placed, x, z, w, dep, hgt, wall, roofCol);
                 placed++;
             }
         }
 
         static float rr(float base_) { return base_; }
+
+        static void House(Transform t, int idx, float x, float z, float w, float dep, float hgt, Material wall, Color roofCol)
+        {
+            var roofM = Mat(roofCol, 0f, 0.3f);
+            var plinthM = Mat(new Color(0.55f, 0.54f, 0.52f), 0f, 0.2f);
+            var windowM = Mat(new Color(0.25f, 0.36f, 0.46f), 0.2f, 0.6f);
+            var chimneyM = Mat(new Color(0.5f, 0.3f, 0.25f), 0f, 0.3f);
+            var doorM = Mat(new Color(0.4f, 0.26f, 0.12f), 0f, 0.3f);
+
+            Box(t, "Dom_Esplanada_" + idx, new Vector3(x, 0.25f, z), new Vector3(w + 0.8f, 0.5f, dep + 0.8f), plinthM, Vector3.zero);
+            Box(t, "Dom_Sciana_" + idx, new Vector3(x, hgt * 0.5f + 0.5f, z), new Vector3(w, hgt, dep), wall, Vector3.zero);
+
+            float a = 34f * Mathf.Deg2Rad;
+            float halfDep = dep * 0.5f + 0.8f;
+            float slopeLen = halfDep / Mathf.Cos(a);
+            float rise = halfDep * Mathf.Tan(a);
+            float midY = hgt + 0.5f + rise * 0.5f;
+
+            Box(t, "Dom_Dach_Lewo_" + idx, new Vector3(x, midY, z - halfDep * 0.5f), new Vector3(w + 1.6f, 0.26f, slopeLen), roofM, new Vector3(-34f, 0f, 0f));
+            Box(t, "Dom_Dach_Prawo_" + idx, new Vector3(x, midY, z + halfDep * 0.5f), new Vector3(w + 1.6f, 0.26f, slopeLen), roofM, new Vector3(34f, 0f, 0f));
+            Box(t, "Dom_Kalenica_" + idx, new Vector3(x, hgt + 0.5f + rise, z), new Vector3(w + 1.9f, 0.34f, 0.7f), roofM, Vector3.zero);
+            Box(t, "Dom_Komin_" + idx, new Vector3(x + w * 0.25f, hgt + 1.5f + rise, z + dep * 0.25f), new Vector3(0.9f, 2.2f, 0.9f), chimneyM, Vector3.zero);
+
+            float fz = dep * 0.5f + 0.42f;
+            Box(t, "Dom_Drzwi_" + idx, new Vector3(x, hgt * 0.35f + 0.5f, z + fz), new Vector3(1.5f, hgt * 0.7f, 0.16f), doorM, Vector3.zero);
+            Box(t, "Dom_Okno1_" + idx, new Vector3(x - w * 0.28f, hgt * 0.55f + 0.5f, z + fz), new Vector3(1.9f, 1.5f, 0.14f), windowM, Vector3.zero);
+            Box(t, "Dom_Okno2_" + idx, new Vector3(x + w * 0.28f, hgt * 0.55f + 0.5f, z + fz), new Vector3(1.9f, 1.5f, 0.14f), windowM, Vector3.zero);
+            Box(t, "Dom_Esplanada_Krok1" + idx, new Vector3(x, 0.12f, z + fz + 0.8f), new Vector3(2.4f, 0.24f, 1.4f), plinthM, Vector3.zero);
+        }
 
         static void Lamp(Transform t, Vector3 localPos)
         {

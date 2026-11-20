@@ -43,8 +43,8 @@ namespace Miasta
 
         void RotateCam()
         {
-            float mx = Input.GetAxis("Mouse X") * mouseSens;
-            float my = Input.GetAxis("Mouse Y") * mouseSens;
+            float mx = InputGate.MouseX() * mouseSens;
+            float my = InputGate.MouseY() * mouseSens;
             yaw += mx;
             pitch = Mathf.Clamp(pitch - my, -80f, 80f);
             transform.eulerAngles = new Vector3(0f, yaw, 0f);
@@ -52,8 +52,10 @@ namespace Miasta
 
         void Move()
         {
-            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            float sp = (Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed) * Mathf.Clamp(input.magnitude, 0f, 1f);
+            Vector3 input = new Vector3(
+                (InputGate.GetKey(KeyCode.D) ? 1f : 0f) - (InputGate.GetKey(KeyCode.A) ? 1f : 0f), 0f,
+                (InputGate.GetKey(KeyCode.W) ? 1f : 0f) - (InputGate.GetKey(KeyCode.S) ? 1f : 0f));
+            float sp = (InputGate.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed) * Mathf.Clamp(input.magnitude, 0f, 1f);
             Vector3 move = (transform.right * input.x + transform.forward * input.z).normalized * sp;
             if (cc.isGrounded) vv = -1f;
             else vv += Physics.gravity.y * 2f * Time.deltaTime;
@@ -69,7 +71,7 @@ namespace Miasta
             RotateCam();
             Move();
             if (UIOpen()) return;
-            if (Input.GetKeyDown(KeyCode.E)) TryInteract();
+            if (InputGate.GetKeyDown(KeyCode.E)) TryInteract();
         }
 
         bool UIOpen()

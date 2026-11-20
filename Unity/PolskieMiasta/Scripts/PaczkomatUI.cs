@@ -75,7 +75,7 @@ namespace Miasta
 
         void Update()
         {
-            if (root != null && root.activeSelf && Input.GetKeyDown(KeyCode.Escape)) Close();
+            if (root != null && root.activeSelf && InputGate.GetKeyDown(KeyCode.Escape)) Close();
         }
         
         string currentInfo()

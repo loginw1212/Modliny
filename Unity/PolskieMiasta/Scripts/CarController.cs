@@ -14,13 +14,13 @@ namespace Miasta
         void Update()
         {
             if (driver == null) return;
-            if (Input.GetKeyDown(KeyCode.E)) { Exit(); return; }
+            if (InputGate.GetKeyDown(KeyCode.E)) { Exit(); return; }
             float accel = 0f;
-            if (Input.GetKey(KeyCode.W)) accel = 1f;
-            if (Input.GetKey(KeyCode.S)) accel = -0.6f;
+            if (InputGate.GetKey(KeyCode.W)) accel = 1f;
+            if (InputGate.GetKey(KeyCode.S)) accel = -0.6f;
             float steer = 0f;
-            if (Input.GetKey(KeyCode.A)) steer = 1f;
-            if (Input.GetKey(KeyCode.D)) steer = -1f;
+            if (InputGate.GetKey(KeyCode.A)) steer = 1f;
+            if (InputGate.GetKey(KeyCode.D)) steer = -1f;
             float max = baseMaxSpeed + (GameManager.I != null ? GameManager.I.turboBonus : 0f);
             speed = Mathf.MoveTowards(speed, accel * max, (accel != 0f ? 16f : 24f) * Time.deltaTime);
             if (Mathf.Abs(speed) > 0.1f)

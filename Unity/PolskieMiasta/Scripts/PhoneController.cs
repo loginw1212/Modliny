@@ -31,7 +31,7 @@ namespace Miasta
                 feedTimer -= Time.deltaTime;
                 if (feedTimer <= 0f) feedText.text = "";
             }
-            if (Input.GetKeyDown(KeyCode.H)) TogglePhone();
+            if (InputGate.GetKeyDown(KeyCode.H)) TogglePhone();
         }
 
         public void Notify(string msg)
