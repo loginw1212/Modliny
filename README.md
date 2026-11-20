@@ -11,7 +11,7 @@ straż pożarna, Boeing 737-800, pojazdy obsługi naziemnej i 10 skryptów syste
 3. W Explorerze kliknij prawym na **Workspace → Insert From File...** i wybierz `ModlinAirport.rbxmx` — **plik jest już w rozpakowanym ZIP-ie, gotowy!**
 4. Gotowe! Całe lotnisko pojawi się w Workspace razem ze skryptami.
 
-> `ModlinAirport.rbxmx.gz.b64` + `Odtworz_Model.ps1` / `.sh` są potrzebne tylko, gdybyś pobrał pojedyncze pliki zamiast ZIP-a (Windows też: `powershell -ExecutionPolicy Bypass -File Odtworz_Model.ps1`).
+> `ModlinAirport.rbxmx.gz.b64` + `Odtworz_Model.bat` / `.sh` są potrzebne tylko, gdybyś pobrał pojedyncze pliki zamiast ZIP-a - wtedy na Windows kliknij dwukrotnie **Odtworz_Model.bat** (sam odblokuje PowerShell).
 
 ## Co jest w środku
 
@@ -47,7 +47,8 @@ straż pożarna, Boeing 737-800, pojazdy obsługi naziemnej i 10 skryptów syste
 ```
 ModlinAirport.rbxmx      ← GOTOWY MODEL do importu w Roblox Studio (całe lotnisko + skrypty)
 ModlinAirport.rbxmx.gz.b64 ← skompresowana kopia modelu (opcjonalna; rozpakowuje Odtworz_Model.ps1 / .sh)
-Odtworz_Model.ps1        ← Windows: odtwarza plik ModlinAirport.rbxmx z kopii .b64
+Odtworz_Model.bat        ← Windows: odtwarza plik ModlinAirport.rbxmx z kopii .b64 (kliknij dwukrotnie)
+Odtworz_Model.ps1        ← to samo co .bat, wersja PowerShell
 Odtworz_Model.sh         ← Mac/Linux: odtwarza plik ModlinAirport.rbxmx z kopii .b64
 src/                     ← wszystkie skrypty Lua (źródła)
   Samolot_Lot.server.lua
