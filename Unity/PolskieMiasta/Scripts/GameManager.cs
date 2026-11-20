@@ -52,8 +52,8 @@ namespace Miasta
         public float courierBonus = 0f;
         public string goldPaint = "nie";
 
-        public delegate void Notify(string msg);
-        public event Notify OnNotify;
+        public delegate void NotifyHandler(string msg);
+        public event NotifyHandler OnNotify;
 
         public class Package
         {
