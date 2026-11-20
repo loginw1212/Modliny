@@ -7,12 +7,11 @@ straż pożarna, Boeing 737-800, pojazdy obsługi naziemnej i 10 skryptów syste
 ## Szybka instalacja (2 minuty)
 
 1. Pobierz repo: zielony przycisk **Code → Download ZIP** i rozpakuj.
-2. Odtwórz plik modelu:
-   - **Windows**: kliknij prawym na `Odtworz_Model.ps1` → **Uruchom za pomocą PowerShell** (powstanie plik `ModlinAirport.rbxmx`),
-   - **Mac/Linux**: w terminalu uruchom `./Odtworz_Model.sh`.
-3. Otwórz pusty plik (Baseplate) w **Roblox Studio**.
-4. W Explorerze kliknij prawym na **Workspace → Insert From File...** i wybierz `ModlinAirport.rbxmx`.
-5. Gotowe! Całe lotnisko pojawi się w Workspace razem ze skryptami.
+2. Otwórz pusty plik (Baseplate) w **Roblox Studio**.
+3. W Explorerze kliknij prawym na **Workspace → Insert From File...** i wybierz `ModlinAirport.rbxmx` — **plik jest już w rozpakowanym ZIP-ie, gotowy!**
+4. Gotowe! Całe lotnisko pojawi się w Workspace razem ze skryptami.
+
+> `ModlinAirport.rbxmx.gz.b64` + `Odtworz_Model.ps1` / `.sh` są potrzebne tylko, gdybyś pobrał pojedyncze pliki zamiast ZIP-a (Windows też: `powershell -ExecutionPolicy Bypass -File Odtworz_Model.ps1`).
 
 ## Co jest w środku
 
@@ -46,9 +45,10 @@ straż pożarna, Boeing 737-800, pojazdy obsługi naziemnej i 10 skryptów syste
 ## Struktura repo
 
 ```
-ModlinAirport.rbxmx.gz.b64 ← skompresowany model lotniska (rozpakowuje Odtworz_Model.ps1 / .sh)
-Odtworz_Model.ps1        ← Windows: odtwarza plik ModlinAirport.rbxmx
-Odtworz_Model.sh         ← Mac/Linux: odtwarza plik ModlinAirport.rbxmx
+ModlinAirport.rbxmx      ← GOTOWY MODEL do importu w Roblox Studio (całe lotnisko + skrypty)
+ModlinAirport.rbxmx.gz.b64 ← skompresowana kopia modelu (opcjonalna; rozpakowuje Odtworz_Model.ps1 / .sh)
+Odtworz_Model.ps1        ← Windows: odtwarza plik ModlinAirport.rbxmx z kopii .b64
+Odtworz_Model.sh         ← Mac/Linux: odtwarza plik ModlinAirport.rbxmx z kopii .b64
 src/                     ← wszystkie skrypty Lua (źródła)
   Samolot_Lot.server.lua
   Pojazdy_Sterowanie.server.lua
