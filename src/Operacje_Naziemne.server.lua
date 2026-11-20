@@ -53,5 +53,7 @@ while true do
 		serve(pojazdy:FindFirstChild("Bus"), offset(-16, 40), 10)
 		serve(pojazdy:FindFirstChild("Bagazowka"), offset(-20, -12), 8)
 		serve(pojazdy:FindFirstChild("Tankowoz"), offset(34, -10), 8, 12)
+		serve(pojazdy:FindFirstChild("BeltLoader"), offset(-26, -6), 8, 12)
+		serve(pojazdy:FindFirstChild("Catering"), offset(-2, -26), 8, 12)
 	end
 end

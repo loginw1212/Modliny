@@ -18,14 +18,17 @@ straż pożarna, Boeing 737-800, pojazdy obsługi naziemnej i 10 skryptów syste
 | Element | Opis |
 |---|---|
 | Pas startowy | 1150 studów, znaki, progi, strefy kontaktu, krawędziowe lampki (migają) |
-| Terminal | Budynek z łukowym dachem, szyba, automatyczne drzwi (E), tablica odlotów, napis MODLIN AIRPORT |
+| Terminal | Budynek z łukowym dachem, **pomarańczowe akcenty (styl Modlin)**, szyba, automatyczne drzwi (E), tablica odlotów, napis **WARSZAWA-MODLIN** |
 | Wieża kontroli | Kabina, radar, migający beacon zielono-biały |
 | Bramki A1–A4 | Stanowiska z czujnikami — tabliczka zmienia się na ZAJĘTA/WOLNA |
 | Rękawy | Jet bridge przy każdej bramce |
 | Samolot | Boeing 737-800 (malowanie WMI: niebieski statecznik, żółte chwty silników), wciągane podwozie i klapy |
-| Pojazdy | Follow-Me, puszback, bagażówka z przyczepą, tankowóz, autobus, schody |
-| Obsługa naziemna | Skrypt automatycznie: schody → autobus → bagażówka → tankowóz przy bramce A1 |
+| Pojazdy | Follow-Me, puszback, bagażówka z przyczepą i bagażem, **taśmociąg bagażowy (belt loader)**, tankowóz, **lotniskówka (catering)**, autobus, schody |
+| Obsługa naziemna | Skrypt automatycznie: schody → autobus → bagażówka → tankowóz → taśmociąg → lotniskówka przy bramce A1 |
+| Marshaler | NPC w pomarańczowej kamizelce z lichtenami przy bramce A1 |
+| Pasażerowie | 4 NPC idących na płycie: autotobus ↔ schody ↔ terminal |
 | Oświetlenie | Sekwencja świateł podejściowych (rabbit), PAPI 2/2, krawędź pasa |
+| Otoczenie | Las sosnowy wokół lotniska (45 drzew), zielone pola Mazowsza |
 
 ## Sterowanie
 

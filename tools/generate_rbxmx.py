@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generuje ModlinAirport.rbxmx - model calego lotniska Modlin dla Roblox Studio."""
 import math
+import random
 from xml.sax.saxutils import escape
 
 OUT = "ModlinAirport.rbxmx"
@@ -139,7 +140,7 @@ lot = Node("Model", "Lotnisko_Modlin_WMI", None)
 
 # --- ziemia ---
 ground = part(lot, "Ziemia", (2200, 1, 1400), (0, 0.5, 0), "#4a7c3a", "grass")
-runway = part(lot, "Pas_Startowy", (1150, 1, 45), (0, 1, 0), "#5a5d61", "concrete")
+runway = part(lot, "Pas_Startowy", (1150, 1, 45), (0, 1, 0), "#46484d", "concrete")
 taxi = part(lot, "Droga_Kolowania", (1150, 1, 35), (0, 1, 150), "#66696d", "concrete")
 apron = part(lot, "Plyta", (420, 1, 120), (0, 1, 250), "#71747a", "concrete")
 for i, sx in enumerate([-450, 450]):
@@ -180,7 +181,7 @@ for idx, gx in enumerate(GATES_X):
 for gx in GATES_X:
 	part(lot, f"MostekSlup{gx}", (5, 13, 5), (gx, 7.5, 296), "#c0c4c8", "concrete")
 	part(lot, f"MostekTunel{gx}", (10, 8, 58), (gx, 15.5, 297), "#d9dcdf", "metal")
-	part(lot, f"MostekGlowica{gx}", (12, 9, 10), (gx, 15.5, 266), "#c7cbd0", "metal")
+	part(lot, f"MostekGlowica{gx}", (12, 9, 10), (gx, 15.5, 266), "#e87722", "metal")
 
 # --- terminal ---
 terminal = Node("Model", "Terminal", lot)
@@ -188,7 +189,10 @@ main_b = part(terminal, "TerminalBudynek", (320, 30, 60), (0, 16, 360), "#e6e8ea
 roof = part(terminal, "TerminalDach", (320, 40, 40), (0, 31, 360), "#b03a3a", "metal", shape="cylinder", rot=(0, 0, 90))
 part(terminal, "TerminalSzyb", (316, 17, 1.2), (0, 15.5, 330.2), "#7fb4c9", "glass", transparency=0.35)
 name_board = part(terminal, "TerminalNapis", (120, 9, 1), (0, 26, 329.4), "#ffffff", "plastic")
-surface_text(name_board, "MODLIN  AIRPORT  ·  WMI", text_color="#0a2c6b", face="Front", bg="#ffffff")
+surface_text(name_board, "WARSZAWA-MODLIN", text_color="#0a2c6b", face="Front", bg="#ffffff")
+part(terminal, "PasPomarancz", (321, 2.5, 61.6), (0, 29.5, 360), "#e87722", "plastic")
+for i, px in enumerate((-140, -70, 0, 70, 140)):
+	part(terminal, f"Akcent{i}", (4, 26, 1.2), (px, 13.5, 331.2), "#e87722", "plastic", collide=False)
 # drzwi (2 grupy)
 for dx in (-60, 60):
 	door = Node("Model", f"Drzwi{dx}", terminal)
@@ -265,6 +269,39 @@ seat = part(plane, "PilotSeat", (3, 1, 3.5), (-150, 17.4, 302), "#11335f", "plas
 part(plane, "KokpitPodest", (7, 7, 0.4), (-150, 16.6, 302), "#b8bcc2", "metal")
 plane.add(f'<Ref name="PrimaryPart">{main.id}</Ref>')
 
+# --- NPC: marshaller w kamizelce ---
+def npc(parent, name, x, z, vest="#e87722", pants="#26324a"):
+	n = Node("Model", name, parent)
+	part(n, "Nogi", (0.9, 2.2, 0.9), (x, 2.1, z), pants, "plastic", collide=False)
+	torso = part(n, "Korpus", (2, 2, 1), (x, 4.2, z), vest, "plastic", collide=False)
+	part(n, "Glowa", (1.2, 1.2, 1.2), (x, 5.9, z), "#e0b48c", "plastic", shape="ball", collide=False)
+	for sx in (-1.45, 1.45):
+		part(n, f"Reka{sx}", (0.55, 2, 0.55), (x + sx, 5.1, z), "#ff8b3d", "neon", collide=False)
+	n.add(f'<Ref name="PrimaryPart">{torso.id}</Ref>')
+	return n
+
+npc(lot, "Marshaller", -104, 232)
+
+# --- pasazerowie idacy na poklad ---
+pasazerowie = Node("Model", "Pasazerowie", lot)
+random.seed(7)
+for i in range(1, 5):
+	npc(pasazerowie, f"Pasazer{i}", -166 + i * 6, 296, vest=random.choice(["#3a7bd5", "#c94f7c", "#4aa96c", "#d9a441"]), pants="#33363b")
+
+# --- las sosnowy ---
+las = Node("Model", "Las", lot)
+placed = 0
+while placed < 45:
+	tx = random.uniform(-1050, 1050)
+	tz = random.uniform(-650, 650)
+	if -680 < tx < 680 and -560 < tz < 500:
+		continue
+	placed += 1
+	s = random.uniform(0.8, 1.5)
+	part(las, f"Pin{placed}", (1.5 * s, 5 * s, 1.5 * s), (tx, 1 + 2.5 * s, tz), "#6b4a2a", "wood", shape="cylinder")
+	part(las, f"Pin{placed}Ig", (5 * s, 7 * s, 5 * s), (tx, 1 + 5.5 * s, tz), "#1e5c34", "plastic", shape="ball")
+	part(las, f"Pin{placed}Ig2", (3.4 * s, 4.6 * s, 3.4 * s), (tx, 1 + 10.5 * s, tz), "#26794a", "plastic", shape="ball")
+
 # --- pojazdy naziemne ---
 pojazdy = Node("Model", "Pojazdy", lot)
 
@@ -280,40 +317,51 @@ def vehicle(name, x, z, color, route=None, maxspd=26):
 	seat = part(v, "Kierowca", (3, 1, 3.5), (x + 1.6, 6.2, z), "#111316", "plastic", cls="VehicleSeat", collide=True)
 	return v, ch, seat
 
-v, ch, seat = vehicle("FollowMe", -390, 200, "#f2c219", route="-330,150;300,150;-330,150")
-part(v, "Kabina", (5.5, 2.4, 4), (-390, 5.7, 200), "#f2c219", "plastic")
-part(v, "Klosz", (4.5, 2.4, 1), (-390, 5.7, 205.4), "#ffffff", "glass", transparency=0.2)
-wheels(v, -390, 200, 3.6, 4)
+v, ch, seat = vehicle("FollowMe", -195, 205, "#f2c219", route="-330,150;300,150;-330,150")
+part(v, "Kabina", (5.5, 2.4, 4), (-195, 5.7, 205), "#f2c219", "plastic")
+part(v, "Klosz", (4.5, 2.4, 1), (-195, 5.7, 210.4), "#ffffff", "glass", transparency=0.2)
+wheels(v, -195, 205, 3.6, 4)
 
-v, ch, seat = vehicle("PushbackTug", -390, 220, "#1c4fa0", maxspd=20)
-part(v, "Kabina", (5.5, 2.2, 4), (-390, 5.6, 220), "#1c4fa0", "plastic")
-part(v, "Uchwyt", (2, 2.4, 2), (-390, 3, 227), "#33363a", "metal")
-wheels(v, -390, 220, 3.7, 4.4, r=1.6)
+v, ch, seat = vehicle("PushbackTug", -195, 222, "#1c4fa0", maxspd=20)
+part(v, "Kabina", (5.5, 2.2, 4), (-195, 5.6, 222), "#1c4fa0", "plastic")
+part(v, "Uchwyt", (2, 2.4, 2), (-195, 3, 229), "#33363a", "metal")
+wheels(v, -195, 222, 3.7, 4.4, r=1.6)
 
-v, ch, seat = vehicle("Bagazowka", -390, 240, "#e8e9eb", route="-330,240;100,242;-330,240", maxspd=20)
-part(v, "Kabina", (5, 3, 4.5), (-390, 6.6, 241.8), "#e8e9eb", "plastic")
-part(v, "Przyczepa", (6, 0.8, 11), (-390, 3.2, 226), "#b9bdc1", "metal")
-part(v, "Bagaż1", (3.4, 2.4, 5), (-390, 5, 226), "#7a4a21", "plastic")
-part(v, "Bagaż2", (3.4, 2.4, 5), (-390, 5, 231), "#3a5c8f", "plastic")
-wheels(v, -390, 240, 3.4, 3.4, r=1.1)
+v, ch, seat = vehicle("Bagazowka", -204, 241, "#e8e9eb", route="-204,241;60,243;-204,241", maxspd=20)
+part(v, "Kabina", (5, 3, 4.5), (-204, 6.6, 242.8), "#e8e9eb", "plastic")
+part(v, "Przyczepa", (6, 0.8, 11), (-204, 3.2, 227.5), "#b9bdc1", "metal")
+part(v, "Bagaż1", (3.4, 2.4, 5), (-204, 5, 227.5), "#7a4a21", "plastic")
+part(v, "Bagaż2", (3.4, 2.4, 5), (-204, 5, 232.5), "#3a5c8f", "plastic")
+wheels(v, -204, 241, 3.4, 3.4, r=1.1)
 
-v, ch, seat = vehicle("Tankowoz", -390, 258, "#c8ccd0", maxspd=18)
-part(v, "ZbiornikPojazd", (9, 9, 26), (-390, 8.4, 258), "#dfe3e6", "metal", shape="cylinder", rot=(0, 90, 0))
-part(v, "Kabina", (5.5, 3.4, 5), (-390, 6.4, 272), "#c8ccd0", "plastic")
-part(v, "Waz", (2, 2, 6), (-390, 4.6, 248), "#586069", "metal")
-wheels(v, -390, 258, 3.9, 8, r=1.5)
+v, ch, seat = vehicle("BeltLoader", -195, 258, "#f2c219", maxspd=18)
+part(v, "Podest", (6, 5, 7), (-195, 6.2, 258), "#f2c219", "plastic")
+part(v, "Tasmo", (3.4, 1, 11), (-195, 8.8, 249), "#33363a", "plastic", cls="WedgePart", collide=False)
+wheels(v, -195, 258, 3.5, 3.5, r=1.3)
 
-v, ch, seat = vehicle("Bus", -390, 278, "#2f9e44", maxspd=22)
-part(v, "Nadwozie", (8.8, 7, 32), (-390, 7, 278), "#2f9e44", "plastic")
-part(v, "OknaBus", (9.2, 2.6, 26), (-390, 9, 277), "#9fd8ef", "glass", transparency=0.3, collide=False)
-wheels(v, -390, 278, 4.1, 11, r=1.7)
+v, ch, seat = vehicle("Tankowoz", -195, 275, "#c8ccd0", maxspd=18)
+part(v, "ZbiornikPojazd", (9, 9, 26), (-195, 8.4, 275), "#dfe3e6", "metal", shape="cylinder", rot=(0, 90, 0))
+part(v, "Kabina", (5.5, 3.4, 5), (-195, 6.4, 289), "#c8ccd0", "plastic")
+part(v, "Waz", (2, 2, 6), (-195, 4.6, 265), "#586069", "metal")
+wheels(v, -195, 275, 3.9, 8, r=1.5)
 
-v, ch, seat = vehicle("Schody", -390, 296, "#5a6166", maxspd=18)
-part(v, "Podstawa", (8, 1.6, 4), (-390, 2.6, 294), "#85898d", "metal")
+v, ch, seat = vehicle("Schody", -195, 296, "#5a6166", maxspd=18)
+part(v, "Podstawa", (8, 1.6, 4), (-195, 2.6, 294), "#85898d", "metal")
 for i in range(7):
-	part(v, f"Stopien{i}", (7.5, 0.8, 2), (-390, 3.4 + i * 2.1, 296.2 - i * 2), "#a7abb0", "metal", collide=False)
-part(v, "Barierka", (7.5, 0.6, 0.4), (-390, 17.4, 294.6), "#f2c219", "metal")
-wheels(v, -390, 296, 3.4, 3, r=1.2)
+	part(v, f"Stopien{i}", (7.5, 0.8, 2), (-195, 3.4 + i * 2.1, 296.2 - i * 2), "#a7abb0", "metal", collide=False)
+part(v, "Barierka", (7.5, 0.6, 0.4), (-195, 17.4, 294.6), "#f2c219", "metal")
+wheels(v, -195, 296, 3.4, 3, r=1.2)
+
+v, ch, seat = vehicle("Bus", -173, 260, "#2f9e44", maxspd=22)
+part(v, "Nadwozie", (8.8, 7, 32), (-173, 7, 260), "#2f9e44", "plastic")
+part(v, "OknaBus", (9.2, 2.6, 26), (-173, 9, 259), "#9fd8ef", "glass", transparency=0.3, collide=False)
+wheels(v, -173, 260, 4.1, 11, r=1.7)
+
+v, ch, seat = vehicle("Catering", -173, 300, "#e8e9eb", maxspd=16)
+part(v, "Nadwozie", (8.6, 7, 22), (-173, 8.2, 301), "#e8e9eb", "plastic")
+part(v, "OknoCatering", (8.8, 2, 4), (-173, 10.4, 292), "#9fd8ef", "glass", transparency=0.3, collide=False)
+part(v, "Lodka", (5.5, 3, 5), (-173, 5.6, 310), "#c8ccd0", "plastic")
+wheels(v, -173, 300, 3.9, 8, r=1.5)
 
 # --- skrypty: samolot ---
 script_node(plane, "Samolot_Lot", f"{SRC}/Samolot_Lot.server.lua")
@@ -327,6 +375,7 @@ z = Node("Model", "Zarzadca", lot)
 script_node(z, "Bramki_System", f"{SRC}/Bramki_System.server.lua")
 script_node(z, "Operacje_Naziemne", f"{SRC}/Operacje_Naziemne.server.lua")
 script_node(z, "Oswietlenie", f"{SRC}/Oswietlenie.server.lua")
+script_node(z, "Ruch_Pasazerow", f"{SRC}/Ruch_Pasazerow.server.lua")
 
 lot.add(prop_str("Name", "Lotnisko_Modlin_WMI"))
 write([lot])

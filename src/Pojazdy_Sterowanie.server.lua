@@ -58,7 +58,7 @@ local route = parseRoute(model:GetAttribute("Route"))
 if #route == 0 then
 	local DEFAULTS = {
 		FollowMe = "-330,150;300,150;-330,150",
-		Bagazowka = "-330,240;100,242;-330,240",
+		Bagazowka = "-204,241;60,243;-204,241",
 	}
 	route = parseRoute(DEFAULTS[model.Name] or "")
 end
