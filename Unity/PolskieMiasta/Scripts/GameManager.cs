@@ -175,7 +175,7 @@ namespace Miasta
 
         public Paczkomat FindPaczkomat(string city)
         {
-            foreach (var pk in Object.FindObjectsOfType<Paczkomat>())
+            foreach (var pk in Finder.All<Paczkomat>())
                 if (pk.cityName == city) return pk;
             return null;
         }
@@ -185,7 +185,7 @@ namespace Miasta
         public void GiveCourierJob()
         {
             if (job != null) { Notify("Masz juz zlecenie!"); return; }
-            var hubs = Object.FindObjectsOfType<CityHub>();
+            var hubs = Finder.All<CityHub>();
             if (hubs == null || hubs.Length == 0) return;
             CityHub nearest = null;
             PlayerDriver pd = PlayerDriver.I;
@@ -238,7 +238,7 @@ namespace Miasta
             machine.InsertPackage(job.item, p != null ? p.code : "000000");
             if (p != null) p.state = "W_Skrytce";
             AddCoins(job.payout);
-            SetCarrying(false);
+            if (PlayerDriver.I != null) PlayerDriver.I.SetCarrying(false);
             Notify("Dostarczone! +" + job.payout + " coins. Kod klienta: " + (p != null ? p.code : ""));
             job = null;
         }
@@ -289,7 +289,7 @@ namespace Miasta
     {
         public static string PickOtherCity(object mgr, string notThis)
         {
-            var cities = Object.FindObjectsOfType<CityHub>();
+            var cities = Finder.All<CityHub>();
             var ok = new List<string>();
             foreach (var c in cities) if (c.cityName != notThis) ok.Add(c.cityName);
             if (ok.Count == 0) return notThis;
@@ -298,7 +298,7 @@ namespace Miasta
 
         public static Vector3 CityPos(string cityName)
         {
-            foreach (var c in Object.FindObjectsOfType<CityHub>())
+            foreach (var c in Finder.All<CityHub>())
                 if (c.cityName == cityName) return c.transform.position;
             return Vector3.zero;
         }

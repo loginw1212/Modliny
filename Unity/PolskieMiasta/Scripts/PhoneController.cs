@@ -143,7 +143,7 @@ namespace Miasta
             {
                 var info = UIFactory.Label(rt, "Paczkomaty", "", 15, Color.white, new Vector2(0f, -320f), new Vector2(330f, 340f), TextAnchor.UpperLeft);
                 string s = "PACZKOMATY (droga):\n";
-                foreach (var c in Object.FindObjectsOfType<CityHub>())
+                foreach (var c in Finder.All<CityHub>())
                 {
                     float d = PlayerDriver.I != null ? Vector3.Distance(CityUtils.CityPos(c.cityName), PlayerDriver.I.transform.position) : 0f;
                     string mark = c.cityName == m.job.toCity ? "  <<<<< CEL" : "";
@@ -238,7 +238,7 @@ namespace Miasta
             PlayerDriver pd = PlayerDriver.I;
             Vector3 pp = Vector3.zero;
             if (pd != null) pp = pd.transform.position;
-            foreach (var c in Object.FindObjectsOfType<CityHub>())
+            foreach (var c in Finder.All<CityHub>())
             {
                 string city = c.cityName;
                 float d = Vector3.Distance(CityUtils.CityPos(city), pp);
@@ -272,7 +272,7 @@ namespace Miasta
                 UIFactory.Btn(rt, "B_Cars", "ODBILOKUJ WSZYSTKIE AUTA", new Color(0.3f, 0.7f, 0.9f), new Vector2(0f, -170f), new Vector2(270f, 40f), () => GameManager.AdminUnlockAllSafe(), 13);
                 var ct = UIFactory.Label(rt, "TI2", "TELEPORT:", 15, Color.white, new Vector2(0f, -215f), new Vector2(330f, 30f), TextAnchor.MiddleCenter);
                 int y = 255;
-                foreach (var c in Object.FindObjectsOfType<CityHub>())
+                foreach (var c in Finder.All<CityHub>())
                 {
                     string city = c.cityName;
                     UIFactory.Btn(rt, "B_TP_" + city, "-> " + city, new Color(0.4f, 0.4f, 0.5f), new Vector2(0f, -y), new Vector2(270f, 34f), () => GameManager.AdminTeleportSafe(city), 13);

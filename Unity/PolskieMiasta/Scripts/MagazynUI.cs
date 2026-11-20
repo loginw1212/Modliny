@@ -27,7 +27,7 @@ namespace Miasta
             root = UIFactory.Panel(canvas.transform, "Magazyn_UI", new Color(0.2f, 0.26f, 0.34f, 0.98f), new Vector2(0f, 0f), new Vector2(500f, 320f));
             titleT = UIFactory.Label(root.transform, "Tytul", "MAGAZYN", 20, new Color(0.95f, 0.8f, 0.2f), new Vector2(0f, -30f), new Vector2(460f, 40f), TextAnchor.MiddleCenter);
             bodyT = UIFactory.Label(root.transform, "Tresc", "", 15, Color.white, new Vector2(0f, -105f), new Vector2(460f, 120f), TextAnchor.UpperLeft);
-            takeBtn = UIFactory.Btn(root.transform, "B_Wez", "WEZ PACZKE", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, -168f), new Vector2(420f, 48f), Take, 16);
+            takeBtn = UIFactory.Btn(root.transform, "B_Wez", "WEZ PACZKE", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, -168f), new Vector2(420f, 48f), Take, 16).gameObject;
             UIFactory.Btn(root.transform, "B_Zamknij", "ZAMKNIJ (ESC)", new Color(0.4f, 0.4f, 0.46f), new Vector2(0f, -225f), new Vector2(420f, 40f), Close, 14);
         }
 

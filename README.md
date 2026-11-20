@@ -19,8 +19,8 @@ też plaża ze **morzem, wieżowcami i palmami**.
 4. Skopiuj folder **`Unity/PolskieMiasta`** do katalogu **`Assets`** projektu
    (czyli będą ścieżki `Assets/PolskieMiasta/Scripts` i `Assets/PolskieMiasta/Editor`).
 5. Poczekaj aż Unity skompiluje skrypty (bez czerwieni w konsoli).
-6. Menu u góry: **Tools → Polskie Miasta - Zbuduj wielki swiat**. To zbuduje cały świat.
-7. **Ctrl+S** zapisz scenę i wcisnij **PLAY** — grasz!
+6. **Gotowe!** Po skompilowaniu świat buduje się SAM (widać go już w scenie). Zapisz **Ctrl+S**.
+7. Wciśnij **PLAY** — grasz! (Jeśli gdyby świat się nie pojawił: menu **Tools → Polskie Miasta - Zbuduj wielki swiat**.)
 
 ## STEROWANIE
 - `W/A/S/D` — chodzenie i jazda autem, `Shift` — bieg

@@ -199,7 +199,7 @@ namespace Miasta
         {
             CityHub best = null;
             if (I == null) return null;
-            foreach (var c in Object.FindObjectsOfType<CityHub>())
+            foreach (var c in Finder.All<CityHub>())
             {
                 if (best == null) best = c;
                 else if (Vector3.Distance(c.transform.position, I.transform.position) < Vector3.Distance(best.transform.position, I.transform.position)) best = c;

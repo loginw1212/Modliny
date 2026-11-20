@@ -139,7 +139,7 @@ namespace Miasta
             var r = go.GetComponent<MeshRenderer>();
             r.sharedMaterial = new Material(Shader.Find("GUI/Text Shader"));
             r.sharedMaterial.color = color;
-            r.castShadows = false;
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             return go;
         }
 
