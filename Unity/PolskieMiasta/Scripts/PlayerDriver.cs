@@ -43,6 +43,7 @@ namespace Miasta
 
         void RotateCam()
         {
+            if (!InputGate.GetMouseButton(1)) return;
             float mx = InputGate.MouseX() * mouseSens;
             float my = InputGate.MouseY() * mouseSens;
             yaw += mx;
@@ -68,9 +69,9 @@ namespace Miasta
             UpdateCarry();
             RefreshHud();
             if (hidden) return;
+            if (UIOpen() || InputGate.TypingInField()) return;
             RotateCam();
             Move();
-            if (UIOpen()) return;
             if (InputGate.GetKeyDown(KeyCode.E)) TryInteract();
         }
 
@@ -175,7 +176,7 @@ namespace Miasta
                         else if (hit.collider.GetComponentInParent<CarController>() != null && !hit.collider.GetComponentInParent<CarController>().displayCar) kind = "auto";
                     }
                 }
-                if (kind != "") ht = "E - " + kind + " | H - telefon";
+                if (kind != "") ht = "E - " + kind + " | PPM (trzymaj) - kamera | H - telefon";
             }
             if (jobText != null) jobText.text = jt;
             if (hintText != null) hintText.text = ht;

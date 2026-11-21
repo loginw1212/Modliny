@@ -53,6 +53,27 @@ namespace Miasta
 #endif
         }
 
+        public static bool GetMouseButton(int b)
+        {
+#if ENABLE_INPUT_SYSTEM
+            var m = Mouse.current;
+            if (m == null) return false;
+            if (b == 0) return m.leftButton.isPressed;
+            if (b == 1) return m.rightButton.isPressed;
+            if (b == 2) return m.middleButton.isPressed;
+            return false;
+#else
+            return Input.GetMouseButton(b);
+#endif
+        }
+
+        public static bool TypingInField()
+        {
+            var es = UnityEngine.EventSystems.EventSystem.current;
+            var sel = es != null ? es.currentSelectedGameObject : null;
+            return sel != null && sel.GetComponent<UnityEngine.UI.InputField>() != null;
+        }
+
 #if ENABLE_INPUT_SYSTEM
         static Key Map(KeyCode k)
         {
