@@ -11,6 +11,10 @@ namespace Miasta
         string lastApp = "paczki";
 
         RectTransform contentT;
+        RectTransform pulpitT;
+        RectTransform appT;
+        GameObject appGO;
+        GameObject phonePanel;
         Text coinsText;
         Text feedText;
         float feedTimer;
@@ -42,14 +46,13 @@ namespace Miasta
 
         void TogglePhone()
         {
-            bool t = !contentT.parent.parent.gameObject.activeSelf;
-            contentT.parent.parent.gameObject.SetActive(t);
+            bool t = !phonePanel.activeSelf;
+            phonePanel.SetActive(t);
         }
 
         public void OpenPhone()
         {
-            if (!contentT.parent.parent.gameObject.activeSelf)
-                contentT.parent.parent.gameObject.SetActive(true);
+            if (!phonePanel.activeSelf) phonePanel.SetActive(true);
         }
 
         void Build()
@@ -58,6 +61,7 @@ namespace Miasta
             var phone = UIFactory.Panel(canvas.transform, "Telefon", new Color(0.08f, 0.09f, 0.12f, 0.94f), new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-356f, 10f), new Vector2(-10f, 648f));
             phone.GetComponent<Image>();
             var ph = phone.GetComponent<RectTransform>();
+            phonePanel = phone;
 
             var screen = UIFactory.Panel(phone.transform, "Ekran", new Color(0.12f, 0.16f, 0.2f, 1f), Vector2.zero, Vector2.one, new Vector2(6f, 50f), new Vector2(-6f, -6f));
             var header = UIFactory.Panel(screen.transform, "Naglowek", new Color(0.95f, 0.6f, 0.1f, 1f), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
@@ -80,6 +84,11 @@ namespace Miasta
             crt.pivot = new Vector2(0.5f, 0.5f);
             crt.anchoredPosition = new Vector2(0f, -25f);
             crt.sizeDelta = new Vector2(0f, -100f);
+            pulpitT = contentT;
+
+            appGO = UIFactory.Panel(screen.transform, "Aplikacja_Root", new Color(0.12f, 0.16f, 0.2f, 0.98f), Vector2.zero, Vector2.one, new Vector2(4f, 4f), new Vector2(-4f, -54f));
+            appT = appGO.GetComponent<RectTransform>();
+            appGO.SetActive(false);
 
             var tabs = UIFactory.Panel(phone.transform, "Przyciski", new Color(0.06f, 0.07f, 0.1f, 1f), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             var trt = tabs.GetComponent<RectTransform>();
@@ -140,13 +149,22 @@ namespace Miasta
         void OpenApp(string which)
         {
             lastApp = which;
+            if (which == "menu")
+            {
+                contentT = pulpitT;
+                appGO.SetActive(false);
+                foreach (Transform c in contentT) Destroy(c.gameObject);
+                AppMenu();
+                return;
+            }
+            contentT = appT;
+            appGO.SetActive(true);
             foreach (Transform c in contentT) Destroy(c.gameObject);
             if (which == "paczki") AppPaczkiRoot();
             else if (which == "sklep") AppSklep();
             else if (which == "mapa") AppMapa();
             else if (which == "admin") AppAdmin();
-            else AppMenu();
-            if (which != "menu") AddAppCloseBtn();
+            AddAppCloseBtn();
         }
 
         void AddAppCloseBtn()
