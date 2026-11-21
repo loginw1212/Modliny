@@ -55,7 +55,7 @@ namespace Miasta
         void Build()
         {
             var canvas = UIFactory.RootCanvas();
-            var phone = UIFactory.Panel(canvas.transform, "Telefon", new Color(0.08f, 0.09f, 0.12f, 0.94f), new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-356f, 10f), new Vector2(-10f, 10f));
+            var phone = UIFactory.Panel(canvas.transform, "Telefon", new Color(0.08f, 0.09f, 0.12f, 0.94f), new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-356f, 10f), new Vector2(-10f, 648f));
             phone.GetComponent<Image>();
             var ph = phone.GetComponent<RectTransform>();
 

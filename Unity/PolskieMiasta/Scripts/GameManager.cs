@@ -94,6 +94,10 @@ namespace Miasta
 
         void Start()
         {
+            if (PhoneController.I == null) gameObject.AddComponent<PhoneController>();
+            if (SalonUI.I == null) gameObject.AddComponent<SalonUI>();
+            if (MagazynUI.I == null) gameObject.AddComponent<MagazynUI>();
+            if (PaczkomatUI.I == null) gameObject.AddComponent<PaczkomatUI>();
             StartCoroutine(CleanupLoop());
         }
 

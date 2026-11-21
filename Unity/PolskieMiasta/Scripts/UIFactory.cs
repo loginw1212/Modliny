@@ -17,6 +17,7 @@ namespace Miasta
 
         public static Canvas RootCanvas()
         {
+            EnsureEventSystem();
             if (canvas != null) return canvas;
             var go = new GameObject("Telefono_Canvas");
             canvas = go.AddComponent<Canvas>();
@@ -24,6 +25,18 @@ namespace Miasta
             go.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             go.AddComponent<GraphicRaycaster>();
             return canvas;
+        }
+
+        static void EnsureEventSystem()
+        {
+            if (UnityEngine.EventSystems.EventSystem.current != null) return;
+            var go = new GameObject("EventSystem");
+            go.AddComponent<UnityEngine.EventSystems.EventSystem>();
+#if ENABLE_INPUT_SYSTEM
+            go.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+#else
+            go.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+#endif
         }
 
         public static GameObject Panel(Transform parent, string name, Color c, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
