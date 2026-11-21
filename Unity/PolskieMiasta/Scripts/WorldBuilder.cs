@@ -260,6 +260,20 @@ namespace Miasta
             MagazynBudynek(t, new Vector3(-half * 0.25f, 0f, half * 0.25f), d.id);
             SalonBudynek(t, new Vector3(half * 0.25f, 0f, -half * 0.25f), d.id);
 
+            string[] klienci = { "Heniek", "Zosia", "Mirek" };
+            Color[] koszulki = { new Color(0.75f, 0.3f, 0.3f), new Color(0.3f, 0.7f, 0.4f), new Color(0.8f, 0.6f, 0.15f) };
+            for (int k = 0; k < klienci.Length; k++)
+            {
+                Vector3 kpos = new Vector3(-half * 0.25f - 3f, 0f, 6.5f);
+                Vector3 krot = new Vector3(0f, 90f, 0f);
+                if (k == 1) { kpos = new Vector3(8.5f, 0f, half * 0.25f + 3f); krot = new Vector3(0f, 180f, 0f); }
+                if (k == 2) { kpos = new Vector3(half * 0.25f + 3f, 0f, -6.5f); krot = new Vector3(0f, -90f, 0f); }
+                var kn = Npc(t, "Klient_NPC_" + klienci[k], kpos, koszulki[k], new Color(0.2f, 0.2f, 0.3f), krot);
+                var kc = kn.AddComponent<Miasta.KlientNpc>();
+                kc.npcName = klienci[k] + " (" + d.display + ")";
+                kc.cityName = d.id;
+            }
+
             for (int i = -3; i <= 3; i++)
             {
                 if (i == 0) continue;

@@ -49,4 +49,12 @@ namespace Miasta
         public string cityName = "Miasto";
         public bool hasPaczkomat = true;
     }
+
+    public class KlientNpc : MonoBehaviour
+    {
+        public string npcName = "Mieszkaniec";
+        public string cityName = "Krasnogrod";
+        public string wantsItem = "";
+        public bool hasOrder = false;
+    }
 }

@@ -72,9 +72,11 @@ namespace Miasta
             public string toCity;
             public int payout;
             public bool loaded;
+            public string npcName;
         }
 
         public List<Package> packages = new List<Package>();
+        public List<KlientNpc> npcOrders = new List<KlientNpc>();
         public CourierJob job;
         int nextId = 1001;
 
@@ -99,6 +101,27 @@ namespace Miasta
             if (MagazynUI.I == null) gameObject.AddComponent<MagazynUI>();
             if (PaczkomatUI.I == null) gameObject.AddComponent<PaczkomatUI>();
             StartCoroutine(CleanupLoop());
+            StartCoroutine(NpcOrderLoop());
+        }
+
+        IEnumerator NpcOrderLoop()
+        {
+            yield return new WaitForSeconds(30f);
+            while (true)
+            {
+                yield return new WaitForSeconds(Random.Range(40f, 75f));
+                var npcs = Finder.All<KlientNpc>();
+                if (npcs == null || npcs.Length == 0) continue;
+                npcOrders.RemoveAll(n => n == null || !n.hasOrder);
+                var free = new List<KlientNpc>();
+                foreach (var n in npcs) if (!n.hasOrder) free.Add(n);
+                if (free.Count == 0) continue;
+                var n2 = free[Random.Range(0, free.Count)];
+                n2.wantsItem = Catalogs.ShopItems[Random.Range(0, Catalogs.ShopItems.Length)][0];
+                n2.hasOrder = true;
+                npcOrders.Add(n2);
+                Notify("NPC " + n2.npcName + " zamowil paczke (" + n2.wantsItem + ")! Apka PACZKI -> KURIER.");
+            }
         }
 
         IEnumerator CleanupLoop()
@@ -217,6 +240,35 @@ namespace Miasta
             Notify("Nowe zlecenie: " + p.item + " z MAGAZYNU " + from + " do PACZKOMATU " + to + ". Zaplata: " + job.payout + " coins");
         }
 
+        public void GiveNpcJob(KlientNpc n)
+        {
+            if (job != null) { Notify("Masz juz zlecenie!"); return; }
+            if (n == null || !n.hasOrder) return;
+            string from = CityUtils.PickOtherCity(I, n.cityName);
+            job = new CourierJob();
+            job.pkgId = -1;
+            job.item = n.wantsItem;
+            job.fromCity = from;
+            job.toCity = n.cityName;
+            job.npcName = n.npcName;
+            job.payout = Mathf.RoundToInt((180f + Vector3.Distance(CityUtils.CityPos(from), CityUtils.CityPos(n.cityName)) / 8f) * (1f + courierBonus));
+            n.hasOrder = false;
+            npcOrders.Remove(n);
+            Notify("Zlecenie NPC: " + job.item + " z magazynu " + from + " dla " + n.npcName + ". Zaplata: " + job.payout + " coins");
+        }
+
+        public void DeliverJobToNpc(KlientNpc n)
+        {
+            if (job == null || n == null) return;
+            if (job.npcName == null) { Notify("To zlecenie jest do paczkomatu " + job.toCity); return; }
+            if (!job.loaded) { Notify("Nie masz paczki przy sobie! Najpierw magazyn " + job.fromCity); return; }
+            if (n.npcName != job.npcName) { Notify("To nie ten klient! Paczka jest dla " + job.npcName); return; }
+            AddCoins(job.payout);
+            if (PlayerDriver.I != null) PlayerDriver.I.SetCarrying(false);
+            Notify("Dostarczone do " + n.npcName + "! +" + job.payout + " coins.");
+            job = null;
+        }
+
         public Package GetPackage(int id)
         {
             foreach (var p in packages) if (p.id == id) return p;
@@ -236,6 +288,7 @@ namespace Miasta
         public void DeliverCurrentJobTo(Paczkomat machine)
         {
             if (job == null || machine == null) return;
+            if (job.npcName != null) { Notify("To zlecenie jest dla NPC " + job.npcName + " - podejdz i wcisnij E."); return; }
             if (!job.loaded) { Notify("Nie masz paczki przy sobie! Najpierw magazyn " + job.fromCity); return; }
             if (machine.cityName != job.toCity) { Notify("To zly paczkomat! Paczka jedzie do " + job.toCity); return; }
             var p = GetPackage(job.pkgId);

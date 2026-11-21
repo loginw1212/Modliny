@@ -102,7 +102,7 @@ namespace Miasta
 
             BuildPhoneIcon(canvas.transform);
 
-            OpenApp("paczki");
+            OpenApp("menu");
         }
 
         void BuildPhoneIcon(Transform parent)
@@ -145,6 +145,33 @@ namespace Miasta
             else if (which == "sklep") AppSklep();
             else if (which == "mapa") AppMapa();
             else if (which == "admin") AppAdmin();
+            else AppMenu();
+            if (which != "menu") AddAppCloseBtn();
+        }
+
+        void AddAppCloseBtn()
+        {
+            var x = UIFactory.Btn(contentT, "X_App", "X", new Color(0.5f, 0.2f, 0.2f), Vector2.zero, new Vector2(28f, 28f), () => OpenApp("menu"), 14);
+            var xrt = x.GetComponent<RectTransform>();
+            xrt.anchorMin = new Vector2(1f, 1f);
+            xrt.anchorMax = new Vector2(1f, 1f);
+            xrt.pivot = new Vector2(1f, 1f);
+            xrt.anchoredPosition = new Vector2(-6f, -6f);
+        }
+
+        void AppMenu()
+        {
+            var rt = contentT;
+            UIFactory.Label(rt, "Tytul", "TELEFON - APLIKACJE", 19, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            MakeTile(rt, 95f, "PACZKI", new Color(0.95f, 0.6f, 0.1f), "paczki");
+            MakeTile(rt, 175f, "SKLEP", new Color(0.2f, 0.7f, 0.4f), "sklep");
+            MakeTile(rt, 255f, "MAPA", new Color(0.3f, 0.5f, 0.9f), "mapa");
+            MakeTile(rt, 335f, "ADMIN", new Color(0.8f, 0.25f, 0.25f), "admin");
+        }
+
+        void MakeTile(Transform rt, float y, string label, Color c, string app)
+        {
+            UIFactory.Btn(rt, "Tile_" + app, label, c, new Vector2(20f, -y), new Vector2(270f, 60f), () => OpenApp(app), 18);
         }
 
         // ============ PACZKI ============
@@ -167,11 +194,28 @@ namespace Miasta
             {
                 jobT.text = "Nie masz zlecenia.";
                 UIFactory.Btn(rt, "B_Wez", "WEZ ZLECENIE", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, -155f), new Vector2(300f, 46f), () => { GameManager.GiveJobSafe(); AppPaczkiKurier(); }, 16);
-                UIFactory.Btn(rt, "B_Wstecz", "< WSTECZ", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -215f), new Vector2(300f, 40f), () => AppPaczkiRoot(), 14);
+                var npt = UIFactory.Label(rt, "NaglowekNPC", "ZAMOWIENIA NPC:", 15, new Color(0.5f, 0.9f, 0.7f), new Vector2(0f, -200f), new Vector2(330f, 30f), TextAnchor.MiddleCenter);
+                float ny = 232f;
+                if (m.npcOrders.Count == 0) npt.text = "ZAMOWIENIA NPC: (brak - czekaj, NPC sam zamawia)";
+                int shown = 0;
+                foreach (var n in m.npcOrders)
+                {
+                    if (n == null || shown >= 4) continue;
+                    shown++;
+                    var cc = n;
+                    UIFactory.Btn(rt, "B_NPC_" + shown, n.npcName + ": " + n.wantsItem, new Color(0.2f, 0.7f, 0.4f), new Vector2(0f, -ny), new Vector2(300f, 36f), () => { GameManager.I.GiveNpcJob(cc); AppPaczkiKurier(); }, 13);
+                    ny += 44f;
+                }
+                UIFactory.Btn(rt, "B_Wstecz", "< WSTECZ", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -520f), new Vector2(300f, 40f), () => AppPaczkiRoot(), 14);
                 return;
             }
             string state;
-            if (m.job.loaded) state = "Paczka w posiadaniu. Dojedz do PACZKOMATU " + m.job.toCity + " i wcisnij E przy maszynie.";
+            if (m.job.npcName != null)
+            {
+                if (m.job.loaded) state = "Paczka w posiadaniu. Dowiez ja do NPC: " + m.job.npcName + " (w " + m.job.toCity + ") i wcisnij E przy nim.";
+                else state = "1. Jedz do MAGAZYNU " + m.job.fromCity + ". 2. E przy bramie -> wez paczke. 3. Dowiez do NPC " + m.job.npcName + " w " + m.job.toCity + ".";
+            }
+            else if (m.job.loaded) state = "Paczka w posiadaniu. Dojedz do PACZKOMATU " + m.job.toCity + " i wcisnij E przy maszynie.";
             else if (m.job.toCity != null) state = "1. Jedz do MAGAZYNU w " + m.job.fromCity + ". 2. Wcisnij E przy bramie -> wez paczke. 3. Jedz do paczkomatu " + m.job.toCity + ".";
             else state = "Zadanie zakonczone.";
             jobT.text = "PACZKA: " + m.job.item +

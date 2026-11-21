@@ -89,6 +89,12 @@ namespace Miasta
             if (cam == null) return;
             RaycastHit hit;
             if (!Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 6.5f)) return;
+            var kn = hit.collider.GetComponentInParent<KlientNpc>();
+            if (kn != null)
+            {
+                if (GameManager.I != null) GameManager.I.DeliverJobToNpc(kn);
+                return;
+            }
             var npc = hit.collider.GetComponentInParent<SalonNPC>();
             if (npc != null) { SalonUI.Open(npc); return; }
             var mg = hit.collider.GetComponentInParent<Magazyn>();
@@ -170,7 +176,12 @@ namespace Miasta
                     RaycastHit hit;
                     if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 6.5f))
                     {
-                        if (hit.collider.GetComponentInParent<SalonNPC>() != null) kind = "sprzedawca salonu";
+                        if (hit.collider.GetComponentInParent<KlientNpc>() != null)
+                        {
+                            var kn2 = hit.collider.GetComponentInParent<KlientNpc>();
+                            kind = kn2.hasOrder ? "klient NPC " + kn2.npcName + " (Oczekuje)" : "mieszkaniec";
+                        }
+                        else if (hit.collider.GetComponentInParent<SalonNPC>() != null) kind = "sprzedawca salonu";
                         else if (hit.collider.GetComponentInParent<Magazyn>() != null) kind = "magazyn";
                         else if (hit.collider.GetComponentInParent<Paczkomat>() != null) kind = "paczkomat";
                         else if (hit.collider.GetComponentInParent<CarController>() != null && !hit.collider.GetComponentInParent<CarController>().displayCar) kind = "auto";
