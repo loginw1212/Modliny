@@ -86,7 +86,7 @@ namespace Miasta
             crt.sizeDelta = new Vector2(0f, -100f);
             pulpitT = contentT;
 
-            appGO = UIFactory.Panel(screen.transform, "Aplikacja_Root", new Color(0.12f, 0.16f, 0.2f, 0.98f), Vector2.zero, Vector2.one, new Vector2(4f, 4f), new Vector2(-4f, -54f));
+            appGO = UIFactory.Panel(screen.transform, "Aplikacja_Root", new Color(0.12f, 0.16f, 0.2f, 0.99f), Vector2.zero, Vector2.one, new Vector2(2f, 2f), new Vector2(-2f, -2f));
             appT = appGO.GetComponent<RectTransform>();
             appGO.SetActive(false);
 
@@ -174,7 +174,8 @@ namespace Miasta
             xrt.anchorMin = new Vector2(1f, 1f);
             xrt.anchorMax = new Vector2(1f, 1f);
             xrt.pivot = new Vector2(1f, 1f);
-            xrt.anchoredPosition = new Vector2(-6f, -6f);
+            xrt.anchoredPosition = new Vector2(-8f, -8f);
+            xrt.sizeDelta = new Vector2(34f, 34f);
         }
 
         void AppMenu()
