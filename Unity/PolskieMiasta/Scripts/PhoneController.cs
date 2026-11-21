@@ -46,6 +46,12 @@ namespace Miasta
             contentT.parent.parent.gameObject.SetActive(t);
         }
 
+        public void OpenPhone()
+        {
+            if (!contentT.parent.parent.gameObject.activeSelf)
+                contentT.parent.parent.gameObject.SetActive(true);
+        }
+
         void Build()
         {
             var canvas = UIFactory.RootCanvas();
@@ -94,7 +100,36 @@ namespace Miasta
             hrt2.pivot = new Vector2(1f, 1f);
             hrt2.anchoredPosition = new Vector2(-4f, -4f);
 
+            BuildPhoneIcon(canvas.transform);
+
             OpenApp("paczki");
+        }
+
+        void BuildPhoneIcon(Transform parent)
+        {
+            var icon = UIFactory.Btn(parent, "Ikonka_Telefonu", "", new Color(0.1f, 0.11f, 0.13f, 0.95f), Vector2.zero, new Vector2(48f, 80f), () => TogglePhone());
+            var irt = icon.GetComponent<RectTransform>();
+            irt.anchorMin = new Vector2(1f, 0f);
+            irt.anchorMax = new Vector2(1f, 0f);
+            irt.pivot = new Vector2(0.5f, 0.5f);
+            irt.anchoredPosition = new Vector2(-408f, 55f);
+
+            var scr = UIFactory.Panel(icon.transform, "Ikonka_Ekran", new Color(0.25f, 0.7f, 0.4f, 1f), Vector2.zero, Vector2.zero);
+            var srt = scr.GetComponent<RectTransform>();
+            srt.anchorMin = Vector2.zero;
+            srt.anchorMax = Vector2.one;
+            srt.offsetMin = new Vector2(7f, 16f);
+            srt.offsetMax = new Vector2(-7f, -12f);
+            UIFactory.Label(scr.transform, "Ikonka_Litera", "P", 16, Color.white, Vector2.zero, Vector2.zero, TextAnchor.MiddleCenter)
+                .GetComponent<RectTransform>().sizeDelta = new Vector2(34f, 24f);
+
+            var dot = UIFactory.Panel(icon.transform, "Ikonka_Dom", new Color(0.85f, 0.85f, 0.85f, 1f), Vector2.zero, Vector2.zero);
+            var drt = dot.GetComponent<RectTransform>();
+            drt.anchorMin = new Vector2(0.5f, 0f);
+            drt.anchorMax = new Vector2(0.5f, 0f);
+            drt.pivot = new Vector2(0.5f, 0f);
+            drt.anchoredPosition = new Vector2(0f, 4f);
+            drt.sizeDelta = new Vector2(10f, 3f);
         }
 
         public void Rebuild()
