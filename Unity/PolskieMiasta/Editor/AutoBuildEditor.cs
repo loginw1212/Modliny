@@ -16,11 +16,29 @@ namespace MiastaEditor
         static void BuildOnce()
         {
             if (Application.isPlaying) return;
-            Miasta.WorldBuilder.Build();
-            if (GameObject.Find("Polskie_Miasta") != null)
+            var ready = GameObject.Find("Polskie_Miasta_v3");
+            if (ready != null)
             {
-                EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
-                Debug.Log("POLSKIE MIASTA: swiat gotowy w scenie! Zapisz Ctrl+S i wcisnij Play.");
+                return; // mapa juz jest w scenie zapisana - nic nie rob
+            }
+            Miasta.WorldBuilder.Build();
+            if (GameObject.Find("Polskie_Miasta_v3") == null) return;
+
+            var scene = EditorSceneManager.GetActiveScene();
+            EditorSceneManager.MarkSceneDirty(scene);
+            Debug.Log("POLSKIE MIASTA: mapa gotowa i ustawiona w scenie!");
+
+            // automatyczny zapis mapy do sceny (bez wciskania Ctrl+S)
+            if (!string.IsNullOrEmpty(scene.path))
+            {
+                bool ok = EditorSceneManager.SaveScene(scene);
+                Debug.Log(ok
+                    ? "POLSKIE MIASTA: MAPA ZAPISANA NA STALE w scenie! Od teraz jest zawsze - wcisnij PLAY i graj."
+                    : "POLSKIE MIASTA: nie udalo sie zapisac sceny - zapisz recznie Ctrl+S.");
+            }
+            else
+            {
+                Debug.Log("POLSKIE MIASTA: mapa w scenie. Zapicuj scene plikiem: File -> Save As... (nazwa np. Mapa) - wtedy zostanie na stale.");
             }
         }
     }

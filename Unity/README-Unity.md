@@ -17,7 +17,7 @@ też plaża z **morzem, wieżowcami i palmami**.
 2. Stwórz nowy projekt **3D (Built-in Render Pipeline)**.
 3. W repo weź folder **`Unity/PolskieMiasta`** i skopiuj go do katalogu **`Assets`** projektu (czyli będą ścieżki `Assets/PolskieMiasta/Scripts` i `Assets/PolskieMiasta/Editor`).
 4. Poczekaj aż Unity skompiluje skrypty (bez czerwieni w konsoli).
-5. **Gotowe!** Po skompilowaniu świat buduje się SAM (widać go już w scenie). Zapisz **Ctrl+S**.
+5. **Gotowe!** Po skompilowaniu świat zostanie ZBUDOWANY i ZAPISANY NA STALE w Twojej scenie — mapa od razu gotowa i ustawiona. Wciskasz PLAY i grasz. (Gdybyś chciał przebudować mapę: menu **Tools → Polskie Miasta - Zbuduj mapę od nowa**.)
 6. Wciśnij **PLAY** — grasz! (Awaryjnie: menu **Tools → Polskie Miasta - Zbuduj wielki swiat**.)
 
 ## STEROWANIE

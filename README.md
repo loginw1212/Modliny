@@ -26,7 +26,7 @@ do NPC i wciśnij **E** przy nim. Kamera: **trzymaj prawy przycisk myszy**.
 4. Skopiuj folder **`Unity/PolskieMiasta`** do katalogu **`Assets`** projektu
    (czyli będą ścieżki `Assets/PolskieMiasta/Scripts` i `Assets/PolskieMiasta/Editor`).
 5. Poczekaj aż Unity skompiluje skrypty (bez czerwieni w konsoli).
-6. **Gotowe!** Po skompilowaniu świat buduje się SAM (widać go już w scenie). Zapisz **Ctrl+S**.
+6. **Gotowe!** Po skompilowaniu świat zostanie ZBUDOWANY i ZAPISANY NA STALE w Twojej scenie — mapa od razu gotowa i ustawiona. Wciskasz PLAY i grasz. (Gdybyś chciał przebudować mapę: menu **Tools → Polskie Miasta - Zbuduj mapę od nowa**.)
 7. Wciśnij **PLAY** — grasz! (Jeśli gdyby świat się nie pojawił: menu **Tools → Polskie Miasta - Zbuduj wielki swiat**.)
 
 ## STEROWANIE
