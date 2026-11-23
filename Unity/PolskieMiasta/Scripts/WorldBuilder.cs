@@ -15,11 +15,10 @@ namespace Miasta
 
         static readonly CityDef[] defs = new CityDef[]
         {
-            new CityDef { id = "Kasztanowice", display = "KASZTANOWICE", pos = new Vector3(-1600f, 0f, -1600f) },
-            new CityDef { id = "Sloneczny Brzeg", display = "S\u0141ONECZNY BRZEG", pos = new Vector3(1600f, 0f, -1600f), big = true },
-            new CityDef { id = "Solina", display = "SOLINA", pos = new Vector3(1600f, 0f, 1600f) },
-            new CityDef { id = "Bialowoda", display = "BIA\u0141OWODA", pos = new Vector3(-1600f, 0f, 1600f) },
-            new CityDef { id = "Krasnogrod", display = "KRASNOGR\u00D3D", pos = Vector3.zero }
+            new CityDef { id = "Kasztanowice", display = "KASZTANOWICE", pos = new Vector3(-450f, 0f, -450f) },
+            new CityDef { id = "Sloneczny Brzeg", display = "S\u0141ONECZNY BRZEG", pos = new Vector3(450f, 0f, -450f), big = true },
+            new CityDef { id = "Solina", display = "SOLINA", pos = new Vector3(450f, 0f, 450f) },
+            new CityDef { id = "Bialowoda", display = "BIA\u0141OWODA", pos = new Vector3(-450f, 0f, 450f) }
         };
 
         static Material grass, asphalt, sidewalk, white, dark, yellow, sand, water, glass, orange, metal, brickA, brickB, brickC, brickD, skin;
@@ -40,7 +39,15 @@ namespace Miasta
             foreach (var d in defs) City(world.transform, d);
             GameManagerAndPlayer(world.transform);
 
-            Debug.Log("GOTOWE: 5 miast zbudowane! Zapisz scene Ctrl+S, potem wcisnij PLAY. Telefon: klawisz H.");
+            // Dodatkowe obiekty przy trasach (jak na mapa GTA - obiekty rozowane wokal)
+            PaczkomatMachine(world.transform, new Vector3(230f, 0f, 50f), 0f, "Solina");
+            PaczkomatMachine(world.transform, new Vector3(-230f, 0f, -50f), 0f, "Kasztanowice");
+            PaczkomatMachine(world.transform, new Vector3(50f, 0f, 260f), 90f, "Sloneczny Brzeg");
+            BiedronkaShop(world.transform, new Vector3(0f, 0f, 150f), 0f);
+            BiedronkaShop(world.transform, new Vector3(-280f, 0f, 0f), 90f);
+            GsmShop(world.transform, new Vector3(0f, 0f, -150f), 0f);
+
+            Debug.Log("GOTOWE: 4 miasta (jak na mapa), 15 paczkomatow, 4 magazyny, Biedra + sklepy GSM! Telefon: H albo ikonka.");
         }
 
         static void MakeMaterials()
@@ -162,7 +169,7 @@ namespace Miasta
         static void Ground(Transform p)
         {
             Box(p, "Pola_i_Laki", new Vector3(0f, -0.15f, 0f), new Vector3(7000f, 0.3f, 7000f), grass, Vector3.zero);
-            Box(p, "Morze_Sloneczny_Brzeg", new Vector3(1600f, 0.02f, -2450f), new Vector3(3600f, 0.04f, 700f), water, Vector3.zero);
+            Box(p, "Morze_Sloneczny_Brzeg", new Vector3(450f, 0.02f, -1150f), new Vector3(2600f, 0.04f, 900f), water, Vector3.zero);
             var l = new GameObject("Slonce");
             var dir = l.AddComponent<Light>();
             dir.type = LightType.Directional;
@@ -190,15 +197,15 @@ namespace Miasta
 
         static void Roads(Transform p)
         {
-            foreach (var d in defs)
-            {
-                if (d.pos == Vector3.zero) continue;
-                Road(p, "Trasa_Centro_" + d.id, Vector3.zero, d.pos, 16f, asphalt);
-            }
-            Road(p, "Obwodnica_N", new Vector3(-1600f, 0f, -1600f), new Vector3(1600f, 0f, -1600f), 16f, asphalt);
-            Road(p, "Obwodnica_S", new Vector3(-1600f, 0f, 1600f), new Vector3(1600f, 0f, 1600f), 16f, asphalt);
-            Road(p, "Obwodnica_W", new Vector3(-1600f, 0f, -1600f), new Vector3(-1600f, 0f, 1600f), 16f, asphalt);
-            Road(p, "Obwodnica_E", new Vector3(1600f, 0f, -1600f), new Vector3(1600f, 0f, 1600f), 16f, asphalt);
+            const float C = 450f;
+            Road(p, "Trasa_NW", Vector3.zero, new Vector3(-C, 0f, -C), 16f, asphalt);
+            Road(p, "Trasa_NE", Vector3.zero, new Vector3(C, 0f, -C), 16f, asphalt);
+            Road(p, "Trasa_SE", Vector3.zero, new Vector3(C, 0f, C), 16f, asphalt);
+            Road(p, "Trasa_SW", Vector3.zero, new Vector3(-C, 0f, C), 16f, asphalt);
+            Road(p, "Obwodnica_N", new Vector3(-C, 0f, -C), new Vector3(C, 0f, -C), 16f, asphalt);
+            Road(p, "Obwodnica_S", new Vector3(-C, 0f, C), new Vector3(C, 0f, C), 16f, asphalt);
+            Road(p, "Obwodnica_W", new Vector3(-C, 0f, -C), new Vector3(-C, 0f, C), 16f, asphalt);
+            Road(p, "Obwodnica_E", new Vector3(C, 0f, -C), new Vector3(C, 0f, C), 16f, asphalt);
         }
 
         static GameObject Npc(Transform parent, string name, Vector3 pos, Color shirt, Color pants, Vector3 rot)
@@ -225,7 +232,7 @@ namespace Miasta
             np.transform.SetParent(p);
             np.transform.position = d.pos;
             var t = np.transform;
-            float half = d.big ? 450f : 250f;
+            float half = d.big ? 340f : 280f;
             var rng = new System.Random(d.id.GetHashCode());
 
             Box(t, "Pad_Gruntu", new Vector3(0f, 0.01f, 0f), new Vector3(half * 2f + 60f, 0.34f, half * 2f + 60f), grass, Vector3.zero);
@@ -257,8 +264,13 @@ namespace Miasta
             Houses(t, rng, half, d.big);
 
             PaczkomatMachine(t, new Vector3(half * 0.25f, 0f, half * 0.25f), 0f, d.id);
+            PaczkomatMachine(t, new Vector3(-half * 0.25f, 0f, 10f), 0f, d.id);
+            PaczkomatMachine(t, new Vector3(half * 0.25f, 0f, -10f), 0f, d.id);
             MagazynBudynek(t, new Vector3(-half * 0.25f, 0f, half * 0.25f), d.id);
             SalonBudynek(t, new Vector3(half * 0.25f, 0f, -half * 0.25f), d.id);
+            BiedronkaShop(t, new Vector3(-half * 0.6f, 0f, -half * 0.6f), 0f);
+            if (d.big) GsmShop(t, new Vector3(half * 0.25f, 0f, half * 0.25f - 60f), 0f);
+            else GsmShop(t, new Vector3(-half * 0.6f + 30f, 0f, -half * 0.6f), 0f);
 
             string[] klienci = { "Heniek", "Zosia", "Mirek" };
             Color[] koszulki = { new Color(0.75f, 0.3f, 0.3f), new Color(0.3f, 0.7f, 0.4f), new Color(0.8f, 0.6f, 0.15f) };
@@ -296,6 +308,40 @@ namespace Miasta
             var tc2 = traffic2.AddComponent<Miasta.TrafficCar>();
             tc2.route = new Vector3[] { new Vector3(rr - 3f, 0f, rr), new Vector3(rr - 3f, 0f, -rr), new Vector3(-rr + 3f, 0f, -rr), new Vector3(-rr + 3f, 0f, rr) };
             tc2.speed = 7f;
+        }
+
+        static void BiedronkaShop(Transform t, Vector3 localPos, float rotY)
+        {
+            var biedM = Mat(new Color(0.72f, 0.09f, 0.12f), 0f, 0.3f);
+            var np = new GameObject("Biedronka");
+            np.transform.SetParent(t);
+            np.transform.localPosition = localPos;
+            np.transform.eulerAngles = new Vector3(0f, rotY, 0f);
+            Box(np.transform, "Plac_Parking", new Vector3(0f, 0.16f, 15f), new Vector3(32f, 0.34f, 14f), sidewalk, Vector3.zero);
+            Box(np.transform, "Budynek", new Vector3(0f, 4.5f, 0f), new Vector3(26f, 9f, 18f), biedM, Vector3.zero);
+            Box(np.transform, "Pas_Zolty", new Vector3(0f, 8.7f, 0f), new Vector3(26.6f, 1.4f, 18.6f), yellow, Vector3.zero);
+            Box(np.transform, "Drzwi", new Vector3(0f, 2.2f, 9.05f), new Vector3(4f, 4.4f, 0.3f), dark, Vector3.zero);
+            foreach (var x in new float[] { -8f, 8f })
+                Box(np.transform, "Witryna", new Vector3(x, 4f, 9.05f), new Vector3(7f, 3.5f, 0.3f), glass, Vector3.zero);
+            Text(np.transform, "Napis", "BIEDRONKA", new Vector3(0f, 10.3f, 0f), 1.2f, Color.white, Vector3.zero, 52);
+            Box(np.transform, "Koszyki", new Vector3(6f, 0.7f, 10.5f), new Vector3(1.2f, 1.4f, 1.2f), yellow, Vector3.zero);
+        }
+
+        static void GsmShop(Transform t, Vector3 localPos, float rotY)
+        {
+            var gsmM = Mat(new Color(0.13f, 0.17f, 0.34f), 0f, 0.35f);
+            var np = new GameObject("Sklep_GSM");
+            np.transform.SetParent(t);
+            np.transform.localPosition = localPos;
+            np.transform.eulerAngles = new Vector3(0f, rotY, 0f);
+            Box(np.transform, "Plac", new Vector3(0f, 0.16f, 10f), new Vector3(24f, 0.34f, 10f), sidewalk, Vector3.zero);
+            Box(np.transform, "Budynek", new Vector3(0f, 3.5f, 0f), new Vector3(20f, 7f, 14f), gsmM, Vector3.zero);
+            Box(np.transform, "Witryna", new Vector3(0f, 3f, 7.05f), new Vector3(17f, 5f, 0.3f), glass, Vector3.zero);
+            Box(np.transform, "Pas_Pomarancz", new Vector3(0f, 6.6f, 0f), new Vector3(20.6f, 1f, 14.6f), orange, Vector3.zero);
+            Text(np.transform, "Napis", "SKLEP GSM - TELEFONY", new Vector3(0f, 7.8f, 0f), 0.9f, Color.white, Vector3.zero, 44);
+            Cyl(np.transform, "Postument", new Vector3(0f, 0.7f, 11f), new Vector3(1.4f, 1.4f, 1.4f), metal, Vector3.zero);
+            Box(np.transform, "Telefon_Cialo", new Vector3(0f, 2.2f, 11f), new Vector3(1.0f, 2.0f, 0.14f), dark, Vector3.zero);
+            Box(np.transform, "Telefon_Ekran", new Vector3(0f, 2.2f, 11.09f), new Vector3(0.8f, 1.5f, 0.05f), glass, Vector3.zero);
         }
 
         static void Sign(Transform t, string display, Vector3 localPos, float scale)

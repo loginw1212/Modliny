@@ -1,15 +1,22 @@
 # POLSKIE MIASTA — gra 3D w Unity 🚗📦
 
-Wielki świat z **5 miastami połączonymi drogami**, w każdym: paczkomat, salon
+Wielki świat z **4 miastami połączonymi drogami**, w każdym: paczkomat, salon
 samochodowy, magazyn, domki, latarnie, ruch uliczny. W Słonecznym Brzegu jest
 też plaża ze **morzem, wieżowcami i palmami**.
 
 ## Miasta
-1. **Kasztanowice**
-2. **Słoneczny Brzeg** (bardzo duże miasto + plaża)
-3. **Solina**
-4. **Białowoda**
-5. **Krasnogród** (centrum mapy — stąd startujesz)
+1. **Kasztanowice** (lewy górny róg)
+2. **Słoneczny Brzeg** (prawy górny róg, największe + plaża i morze)
+3. **Solina** (prawy dolny róg)
+4. **Białowoda** (lewy dolny róg)
+
+W każddym mieście: **3 paczkomaty, magazyn, salon, Biedronka, sklep GSM**.
+Przy trasach dodatkowo: 3 paczkomaty, 2 Biedronki, 1 sklep GSM.
+Razem: **15 paczkomatów, 4 magazyny, 6 Biedronek, 5 sklepów GSM**.
+
+NPC (Heniek, Zosia, Mirek — w każdym mieście) same zamawiają paczki:
+apka **PACZKI → KURIER → Zamówienia NPC** — weź, dowóź paczkę z magazynu
+do NPC i wciśnij **E** przy nim. Kamera: **trzymaj prawy przycisk myszy**.
 
 ## JAK WGRAĆ (Unity Hub + Unity 2022.3 LTS)
 
