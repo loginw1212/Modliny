@@ -25,27 +25,30 @@ namespace Miasta
 
         public static void Build(bool rebuild = false)
         {
+            var ready = GameObject.Find("Polskie_Miasta_v3");
+            if (ready != null && !rebuild) return;
             var old = GameObject.Find("Polskie_Miasta");
-            if (old != null && !rebuild) return;
             if (old != null) Object.DestroyImmediate(old);
+            var readyOld = GameObject.Find("Polskie_Miasta_v3");
+            if (readyOld != null) Object.DestroyImmediate(readyOld);
             var oldPh = GameObject.Find("Telefono_Canvas");
             if (oldPh != null) Object.DestroyImmediate(oldPh);
 
             MakeMaterials();
 
-            var world = new GameObject("Polskie_Miasta");
+            var world = new GameObject("Polskie_Miasta_v3");
             Ground(world.transform);
             Roads(world.transform);
             foreach (var d in defs) City(world.transform, d);
             GameManagerAndPlayer(world.transform);
 
             // Dodatkowe obiekty przy trasach (jak na mapa GTA - obiekty rozowane wokal)
-            PaczkomatMachine(world.transform, new Vector3(230f, 0f, 50f), 0f, "Solina");
-            PaczkomatMachine(world.transform, new Vector3(-230f, 0f, -50f), 0f, "Kasztanowice");
-            PaczkomatMachine(world.transform, new Vector3(50f, 0f, 260f), 90f, "Sloneczny Brzeg");
+            PaczkomatMachine(world.transform, new Vector3(415f, 0f, 200f), 90f, "Solina");
+            PaczkomatMachine(world.transform, new Vector3(-415f, 0f, -200f), -90f, "Kasztanowice");
+            PaczkomatMachine(world.transform, new Vector3(200f, 0f, 415f), 0f, "Sloneczny Brzeg");
             BiedronkaShop(world.transform, new Vector3(0f, 0f, 150f), 0f);
-            BiedronkaShop(world.transform, new Vector3(-280f, 0f, 0f), 90f);
-            GsmShop(world.transform, new Vector3(0f, 0f, -150f), 0f);
+            BiedronkaShop(world.transform, new Vector3(-280f, 0f, 60f), 90f);
+            GsmShop(world.transform, new Vector3(0f, 0f, -150f), 180f);
 
             Debug.Log("GOTOWE: 4 miasta (jak na mapa), 15 paczkomatow, 4 magazyny, Biedra + sklepy GSM! Telefon: H albo ikonka.");
         }
@@ -268,9 +271,9 @@ namespace Miasta
             PaczkomatMachine(t, new Vector3(half * 0.25f, 0f, -10f), 0f, d.id);
             MagazynBudynek(t, new Vector3(-half * 0.25f, 0f, half * 0.25f), d.id);
             SalonBudynek(t, new Vector3(half * 0.25f, 0f, -half * 0.25f), d.id);
-            BiedronkaShop(t, new Vector3(-half * 0.6f, 0f, -half * 0.6f), 0f);
-            if (d.big) GsmShop(t, new Vector3(half * 0.25f, 0f, half * 0.25f - 60f), 0f);
-            else GsmShop(t, new Vector3(-half * 0.6f + 30f, 0f, -half * 0.6f), 0f);
+            BiedronkaShop(t, new Vector3(-half * 0.45f, 0f, -half * 0.45f), 0f);
+            if (d.big) GsmShop(t, new Vector3(half * 0.25f, 0f, 25f), 0f);
+            else GsmShop(t, new Vector3(-half * 0.45f, 0f, half * 0.45f), 0f);
 
             string[] klienci = { "Heniek", "Zosia", "Mirek" };
             Color[] koszulki = { new Color(0.75f, 0.3f, 0.3f), new Color(0.3f, 0.7f, 0.4f), new Color(0.8f, 0.6f, 0.15f) };
@@ -586,7 +589,7 @@ namespace Miasta
 
             var gracz = new GameObject("Gracz");
             gracz.transform.SetParent(p);
-            gracz.transform.position = new Vector3(18f, 1.1f, 34f);
+            gracz.transform.position = new Vector3(6f, 1.1f, 10f);
             var ccObj = gracz.AddComponent<CharacterController>();
             ccObj.height = 2f;
             ccObj.radius = 0.4f;
@@ -598,8 +601,8 @@ namespace Miasta
 
             var starter = Miasta.CarFactory.BuildMesh(null, "Auto_Start", new Color(0.85f, 0.34f, 0.16f), 4.6f, 2f, 1.4f);
             starter.transform.SetParent(p);
-            starter.transform.position = new Vector3(28f, 0.15f, 40f);
-            starter.transform.eulerAngles = new Vector3(0f, 50f, 0f);
+            starter.transform.position = new Vector3(18f, 0.15f, 22f);
+            starter.transform.eulerAngles = new Vector3(0f, 45f, 0f);
             var sc = starter.AddComponent<Miasta.CarController>();
             sc.carId = "Kasztanka";
             sc.baseMaxSpeed = 26f;
