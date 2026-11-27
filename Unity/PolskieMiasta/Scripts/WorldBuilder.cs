@@ -25,18 +25,20 @@ namespace Miasta
 
         public static void Build(bool rebuild = false)
         {
-            var ready = GameObject.Find("Polskie_Miasta_v3");
+            var ready = GameObject.Find("Polskie_Miasta_v4");
             if (ready != null && !rebuild) return;
-            var old = GameObject.Find("Polskie_Miasta");
-            if (old != null) Object.DestroyImmediate(old);
-            var readyOld = GameObject.Find("Polskie_Miasta_v3");
-            if (readyOld != null) Object.DestroyImmediate(readyOld);
+            // usuwamy KAZDA stara wersje swiata (stara mapa zawsze podmieniana)
+            foreach (var name in new string[] { "Polskie_Miasta", "Polskie_Miasta_v2", "Polskie_Miasta_v3", "Polskie_Miasta_v4" })
+            {
+                var go = GameObject.Find(name);
+                if (go != null) Object.DestroyImmediate(go);
+            }
             var oldPh = GameObject.Find("Telefono_Canvas");
             if (oldPh != null) Object.DestroyImmediate(oldPh);
 
             MakeMaterials();
 
-            var world = new GameObject("Polskie_Miasta_v3");
+            var world = new GameObject("Polskie_Miasta_v4");
             Ground(world.transform);
             Roads(world.transform);
             foreach (var d in defs) City(world.transform, d);
