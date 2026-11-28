@@ -169,128 +169,121 @@ namespace Miasta
 
         void AddAppCloseBtn()
         {
-            var x = UIFactory.Btn(contentT, "X_App", "X", new Color(0.5f, 0.2f, 0.2f), Vector2.zero, new Vector2(28f, 28f), () => OpenApp("menu"), 14);
+            var x = UIFactory.Btn(contentT, "X_App", "X", new Color(0.5f, 0.2f, 0.2f), Vector2.zero, new Vector2(34f, 34f), () => OpenApp("menu"), 15);
             var xrt = x.GetComponent<RectTransform>();
             xrt.anchorMin = new Vector2(1f, 1f);
             xrt.anchorMax = new Vector2(1f, 1f);
             xrt.pivot = new Vector2(1f, 1f);
-            xrt.anchoredPosition = new Vector2(-8f, -8f);
-            xrt.sizeDelta = new Vector2(34f, 34f);
+            xrt.anchoredPosition = new Vector2(-6f, -6f);
         }
+
+        // ===== PULPIT =====
 
         void AppMenu()
         {
             var rt = contentT;
-            UIFactory.Label(rt, "Tytul", "TELEFON - APLIKACJE", 19, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
-            MakeTile(rt, 95f, "PACZKI", new Color(0.95f, 0.6f, 0.1f), "paczki");
-            MakeTile(rt, 175f, "SKLEP", new Color(0.2f, 0.7f, 0.4f), "sklep");
-            MakeTile(rt, 255f, "MAPA", new Color(0.3f, 0.5f, 0.9f), "mapa");
-            MakeTile(rt, 335f, "ADMIN", new Color(0.8f, 0.25f, 0.25f), "admin");
+            UIFactory.Label(rt, "Tytul", "APLIKACJE", 20, Color.white, new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            MakeTile(rt, 165f, "PACZKI", new Color(0.95f, 0.6f, 0.1f), "paczki");
+            MakeTile(rt, 95f, "SKLEP", new Color(0.2f, 0.7f, 0.4f), "sklep");
+            MakeTile(rt, 25f, "MAPA", new Color(0.3f, 0.5f, 0.9f), "mapa");
+            MakeTile(rt, -45f, "ADMIN", new Color(0.8f, 0.25f, 0.25f), "admin");
         }
 
         void MakeTile(Transform rt, float y, string label, Color c, string app)
         {
-            UIFactory.Btn(rt, "Tile_" + app, label, c, new Vector2(20f, -y), new Vector2(270f, 60f), () => OpenApp(app), 18);
+            UIFactory.Btn(rt, "Tile_" + app, label, c, new Vector2(20f, y), new Vector2(270f, 58f), () => OpenApp(app), 18);
         }
 
-        // ============ PACZKI ============
+        // ===== PACZKI =====
 
         void AppPaczkiRoot()
         {
             var rt = contentT;
-            UIFactory.Label(rt, "Tytul", "APLIKACJA PACZKI", 20, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
-            UIFactory.Btn(rt, "B_Kurier", "JESTEM KURIEREM", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, -85f), new Vector2(300f, 54f), () => AppPaczkiKurier(), 18);
-            UIFactory.Btn(rt, "B_Klient", "JESTEM KLIENTEM", new Color(0.2f, 0.7f, 0.4f), new Vector2(0f, -155f), new Vector2(300f, 54f), () => AppPaczkiKlient(), 18);
+            UIFactory.Label(rt, "Tytul", "APLIKACJA PACZKI", 20, Color.white, new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            UIFactory.Btn(rt, "B_Kurier", "JESTEM KURIEREM", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, 155f), new Vector2(290f, 60f), () => AppPaczkiKurier(), 17);
+            UIFactory.Btn(rt, "B_Klient", "JESTEM KLIENTEM", new Color(0.2f, 0.7f, 0.4f), new Vector2(0f, 80f), new Vector2(290f, 60f), () => AppPaczkiKlient(), 17);
         }
 
         void AppPaczkiKurier()
         {
             var rt = contentT;
-            UIFactory.Label(rt, "Tytul", "KURIER - zlecenia", 20, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
             var m = GameManager.I;
-            var jobT = UIFactory.Label(rt, "Zlecenie", "", 15, new Color(0.95f, 0.8f, 0.4f), new Vector2(0f, -85f), new Vector2(330f, 130f), TextAnchor.UpperLeft);
+            UIFactory.Label(rt, "Tytul", "KURIER", 20, Color.white, new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            var jobT = UIFactory.Label(rt, "Zlecenie", "", 14, new Color(0.95f, 0.8f, 0.4f), new Vector2(0f, 160f), new Vector2(320f, 110f), TextAnchor.UpperLeft);
             if (m.job == null)
             {
                 jobT.text = "Nie masz zlecenia.";
-                UIFactory.Btn(rt, "B_Wez", "WEZ ZLECENIE", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, -155f), new Vector2(300f, 46f), () => { GameManager.GiveJobSafe(); AppPaczkiKurier(); }, 16);
-                var npt = UIFactory.Label(rt, "NaglowekNPC", "ZAMOWIENIA NPC:", 15, new Color(0.5f, 0.9f, 0.7f), new Vector2(0f, -200f), new Vector2(330f, 30f), TextAnchor.MiddleCenter);
-                float ny = 232f;
-                if (m.npcOrders.Count == 0) npt.text = "ZAMOWIENIA NPC: (brak - czekaj, NPC sam zamawia)";
+                UIFactory.Btn(rt, "B_Wez", "WEZ ZLECENIE", new Color(0.95f, 0.6f, 0.1f), new Vector2(0f, 75f), new Vector2(290f, 44f), () => { GameManager.GiveJobSafe(); AppPaczkiKurier(); }, 15);
+                var npt = UIFactory.Label(rt, "NaglowekNPC", "ZAMOWIENIA NPC:", 14, new Color(0.5f, 0.9f, 0.7f), new Vector2(0f, 25f), new Vector2(320f, 26f), TextAnchor.MiddleCenter);
+                float ny = -10f;
+                if (m.npcOrders.Count == 0) npt.text = "ZAMOWIENIA NPC: (brak, poczekaj)";
                 int shown = 0;
                 foreach (var n in m.npcOrders)
                 {
-                    if (n == null || shown >= 4) continue;
+                    if (n == null || shown >= 3) continue;
                     shown++;
                     var cc = n;
-                    UIFactory.Btn(rt, "B_NPC_" + shown, n.npcName + ": " + n.wantsItem, new Color(0.2f, 0.7f, 0.4f), new Vector2(0f, -ny), new Vector2(300f, 36f), () => { GameManager.I.GiveNpcJob(cc); AppPaczkiKurier(); }, 13);
-                    ny += 44f;
+                    UIFactory.Btn(rt, "B_NPC_" + shown, n.npcName + ": " + n.wantsItem, new Color(0.2f, 0.7f, 0.4f), new Vector2(0f, ny), new Vector2(290f, 34f), () => { GameManager.I.GiveNpcJob(cc); AppPaczkiKurier(); }, 12);
+                    ny -= 40f;
                 }
-                UIFactory.Btn(rt, "B_Wstecz", "< WSTECZ", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -520f), new Vector2(300f, 40f), () => AppPaczkiRoot(), 14);
+                UIFactory.Btn(rt, "B_Wstecz", "< MENU", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -195f), new Vector2(290f, 38f), () => OpenApp("menu"), 14);
                 return;
             }
             string state;
             if (m.job.npcName != null)
             {
-                if (m.job.loaded) state = "Paczka w posiadaniu. Dowiez ja do NPC: " + m.job.npcName + " (w " + m.job.toCity + ") i wcisnij E przy nim.";
-                else state = "1. Jedz do MAGAZYNU " + m.job.fromCity + ". 2. E przy bramie -> wez paczke. 3. Dowiez do NPC " + m.job.npcName + " w " + m.job.toCity + ".";
+                if (m.job.loaded) state = "Paczka w rece! Dowiez do NPC " + m.job.npcName + " (w " + m.job.toCity + "), patrz na niego i E.";
+                else state = "1. Magazyn " + m.job.fromCity + " -> E -> wez paczke. 2. Do NPC " + m.job.npcName + " w " + m.job.toCity + ".";
             }
-            else if (m.job.loaded) state = "Paczka w posiadaniu. Dojedz do PACZKOMATU " + m.job.toCity + " i wcisnij E przy maszynie.";
-            else if (m.job.toCity != null) state = "1. Jedz do MAGAZYNU w " + m.job.fromCity + ". 2. Wcisnij E przy bramie -> wez paczke. 3. Jedz do paczkomatu " + m.job.toCity + ".";
-            else state = "Zadanie zakonczone.";
-            jobT.text = "PACZKA: " + m.job.item +
-                "\nOD: magazyn " + m.job.fromCity +
-                "\nDO: paczkomat " + m.job.toCity +
-                "\nZAPLATA: " + m.job.payout + " coins" +
-                "\n\n" + state;
+            else if (m.job.loaded) state = "Paczka w rece! Dojedz do PACZKOMATU " + m.job.toCity + " i wcisnij E.";
+            else state = "1. Magazyn " + m.job.fromCity + " -> E -> wez paczke. 2. Paczkomat " + m.job.toCity + ".";
+            jobT.text = m.job.item + "\nZAPLATA: " + m.job.payout + " coins\n" + state;
             if (!m.job.loaded)
-                UIFactory.Btn(rt, "B_Porzuc", "PORZUC ZLECENIE", new Color(0.7f, 0.25f, 0.25f), new Vector2(0f, -215f), new Vector2(300f, 40f), () => { GameManager.AbandonJobSafe(); AppPaczkiKurier(); }, 14);
+                UIFactory.Btn(rt, "B_Porzuc", "PORZUC ZLECENIE", new Color(0.7f, 0.25f, 0.25f), new Vector2(0f, 35f), new Vector2(290f, 36f), () => { GameManager.AbandonJobSafe(); AppPaczkiKurier(); }, 13);
+            var info = UIFactory.Label(rt, "Paczkomaty", "", 13, Color.white, new Vector2(0f, -35f), new Vector2(320f, 160f), TextAnchor.UpperLeft);
+            string ps = "PACZKOMATY (droga):\n";
+            foreach (var c in Finder.All<CityHub>())
             {
-                var info = UIFactory.Label(rt, "Paczkomaty", "", 15, Color.white, new Vector2(0f, -320f), new Vector2(330f, 340f), TextAnchor.UpperLeft);
-                string s = "PACZKOMATY (droga):\n";
-                foreach (var c in Finder.All<CityHub>())
-                {
-                    float d = PlayerDriver.I != null ? Vector3.Distance(CityUtils.CityPos(c.cityName), PlayerDriver.I.transform.position) : 0f;
-                    string mark = c.cityName == m.job.toCity ? "  <<<<< CEL" : "";
-                    s += c.cityName + ": " + Mathf.RoundToInt(d) + " m" + mark + "\n";
-                }
-                info.text = s;
+                float d2 = PlayerDriver.I != null ? Vector3.Distance(CityUtils.CityPos(c.cityName), PlayerDriver.I.transform.position) : 0f;
+                string mark = m.job.npcName == null && c.cityName == m.job.toCity ? "  <<< CEL" : "";
+                ps += c.cityName + ": " + Mathf.RoundToInt(d2) + " m" + mark + "\n";
             }
-            UIFactory.Btn(rt, "B_Wstecz", "< WSTECZ", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -520f), new Vector2(300f, 40f), () => AppPaczkiRoot(), 14);
+            info.text = ps;
+            UIFactory.Btn(rt, "B_Wstecz", "< MENU", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -195f), new Vector2(290f, 38f), () => OpenApp("menu"), 14);
         }
 
         void AppPaczkiKlient()
         {
             var rt = contentT;
-            UIFactory.Label(rt, "Tytul", "KLIENT - zamow paczke", 20, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            UIFactory.Label(rt, "Tytul", "KLIENT - zamow paczke", 18, Color.white, new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
             RectTransform list;
-            UIFactory.ScrollList(rt, "Lista", new Color(0.1f, 0.14f, 0.18f, 0.8f), new Vector2(0f, -175f), new Vector2(315f, 240f), out list);
+            UIFactory.ScrollList(rt, "Lista", new Color(0.1f, 0.14f, 0.18f, 0.8f), new Vector2(0f, 145f), new Vector2(300f, 150f), out list);
             foreach (var it in Catalogs.ShopItems)
             {
                 string item = it[0];
                 int price = int.Parse(it[1]);
-                var row = UIFactory.Panel(list, "R_" + item, new Color(0.16f, 0.22f, 0.28f), Vector2.zero, new Vector2(0f, 40f));
-                UIFactory.Label(row.transform, "TT", item + " - " + price + " coins", 14, Color.white, new Vector2(-70f, 0f), new Vector2(160f, 40f), TextAnchor.MiddleLeft);
-                var b = UIFactory.Btn(row.transform, "BT", "ZAMOW", new Color(0.2f, 0.7f, 0.4f), new Vector2(115f, 0f), new Vector2(90f, 32f), () => { OrderFromPhone(item, price); }, 12);
+                var row = UIFactory.Panel(list, "R_" + item, new Color(0.16f, 0.22f, 0.28f), Vector2.zero, new Vector2(0f, 36f));
+                UIFactory.Label(row.transform, "TT", item + " - " + price, 13, Color.white, new Vector2(-75f, 0f), new Vector2(150f, 36f), TextAnchor.MiddleLeft);
+                UIFactory.Btn(row.transform, "BT", "ZAMOW", new Color(0.2f, 0.7f, 0.4f), new Vector2(95f, 0f), new Vector2(80f, 28f), () => { OrderFromPhone(item, price); }, 11);
             }
-            var mine = UIFactory.Label(rt, "Moje", "", 14, new Color(0.5f, 0.9f, 0.7f), new Vector2(0f, -380f), new Vector2(330f, 340f), TextAnchor.UpperLeft);
-            string s = "MOJE PRZESYLKI:\n";
-            foreach (var p in GameManager.I.packages)
+            var mine = UIFactory.Label(rt, "Moje", "", 12, new Color(0.5f, 0.9f, 0.7f), new Vector2(0f, -35f), new Vector2(320f, 290f), TextAnchor.UpperLeft);
+            string ms = "MOJE PRZESYLKI:\n";
+            foreach (var pp in GameManager.I.packages)
             {
-                string st = p.state == "W_Skrytce" ? "W PACZKOMACIE " + p.toCity + "! KOD: " + p.code
-                    : p.state == "Zamowiona" ? "kurier jedzie..." 
-                    : p.state == "W_Magazynie" ? "w magazynie " + p.toCity
-                    : p.state == "W_Skrytce" ? "" 
-                    : p.state == "Na_Pojazdzie" ? "w drodze do paczkomatu " + p.toCity
+                string st = pp.state == "W_Skrytce" ? "W PACZKOMACIE " + pp.toCity + "! KOD: " + pp.code
+                    : pp.state == "Zamowiona" ? "kurier jedzie..."
+                    : pp.state == "W_Magazynie" ? "w magazynie " + pp.toCity
+                    : pp.state == "Na_Pojazdzie" ? "w drodze do " + pp.toCity
                     : "odebrana";
-                s += "*" + p.item + ": " + st + "\n";
+                ms += "*" + pp.item + ": " + st + "\n";
             }
-            mine.text = s;
-            UIFactory.Btn(rt, "B_Wstecz", "< WSTECZ", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -545f), new Vector2(300f, 36f), () => AppPaczkiRoot(), 13);
+            mine.text = ms;
+            UIFactory.Btn(rt, "B_Wstecz", "< MENU", new Color(0.3f, 0.3f, 0.34f), new Vector2(0f, -195f), new Vector2(290f, 38f), () => OpenApp("menu"), 14);
         }
 
         void OrderFromPhone(string item, int price)
         {
-            string myCity = "Krasnogrod";
+            string myCity = "Kasztanowice";
             PlayerDriver pd = PlayerDriver.I;
             if (pd != null)
             {
@@ -301,21 +294,21 @@ namespace Miasta
             AppPaczkiKlient();
         }
 
-        // ============ SKLEP ============
+        // ===== SKLEP =====
 
         void AppSklep()
         {
             var rt = contentT;
-            UIFactory.Label(rt, "Tytul", "SKLEP (coins)", 20, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
-            int y = 90;
+            UIFactory.Label(rt, "Tytul", "SKLEP (coins)", 20, Color.white, new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            float y = 160f;
             foreach (var it in Catalogs.PhoneShop)
             {
                 int price = int.Parse(it[1]);
                 string tag = it[2];
-                var row = UIFactory.Panel(rt, "R_" + tag, new Color(0.16f, 0.22f, 0.28f), new Vector2(0f, -y), new Vector2(330f, 70f));
-                UIFactory.Label(row.transform, "TT", it[0] + "\n" + it[1] + " coins", 15, Color.white, new Vector2(-70f, 0f), new Vector2(170f, 60f), TextAnchor.MiddleLeft);
-                UIFactory.Btn(row.transform, "BT", "KUP", new Color(0.95f, 0.6f, 0.1f), new Vector2(125f, 0f), new Vector2(80f, 40f), () => BuyUpgrade(tag, price), 15);
-                y += 80;
+                var row = UIFactory.Panel(rt, "R_" + tag, new Color(0.16f, 0.22f, 0.28f), new Vector2(0f, y), new Vector2(310f, 62f));
+                UIFactory.Label(row.transform, "TT", it[0] + "\n" + it[1] + " coins", 14, Color.white, new Vector2(-75f, 0f), new Vector2(170f, 55f), TextAnchor.MiddleLeft);
+                UIFactory.Btn(row.transform, "BT", "KUP", new Color(0.95f, 0.6f, 0.1f), new Vector2(105f, 0f), new Vector2(75f, 38f), () => BuyUpgrade(tag, price), 14);
+                y -= 72f;
             }
         }
 
@@ -327,62 +320,62 @@ namespace Miasta
             m.Save();
             if (tag == "turbo") { m.turboBonus = 12f; m.Notify("Turbo kupione! +12 predkosci."); }
             else if (tag == "kurier") { m.courierBonus = 0.5f; m.Notify("Stawka kuriera +50%!"); }
-            else if (tag == "lakier") { m.goldPaint = "tak"; m.Notify("Zloty lakier kupiony! Twoje nowe auta beda zlotowe."); }
+            else if (tag == "lakier") { m.goldPaint = "tak"; m.Notify("Zloty lakier kupiony!"); }
             m.Notify("Kupiono za " + price + " coins. Zostalo: " + m.coins);
         }
 
-        // ============ MAPA ============
+        // ===== MAPA =====
 
         void AppMapa()
         {
             var rt = contentT;
-            UIFactory.Label(rt, "Tytul", "MAPA - Wszystkie miasta", 18, Color.white, new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            UIFactory.Label(rt, "Tytul", "MAPA - miasta", 18, Color.white, new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
             RectTransform list;
-            UIFactory.ScrollList(rt, "Lista", new Color(0.1f, 0.14f, 0.18f, 0.8f), new Vector2(0f, -270f), new Vector2(315f, 440f), out list);
+            UIFactory.ScrollList(rt, "Lista", new Color(0.1f, 0.14f, 0.18f, 0.8f), new Vector2(0f, 60f), new Vector2(300f, 330f), out list);
             PlayerDriver pd = PlayerDriver.I;
             Vector3 pp = Vector3.zero;
             if (pd != null) pp = pd.transform.position;
             foreach (var c in Finder.All<CityHub>())
             {
                 string city = c.cityName;
-                float d = Vector3.Distance(CityUtils.CityPos(city), pp);
-                var row = UIFactory.Panel(list, "R_" + city, new Color(0.16f, 0.22f, 0.28f), Vector2.zero, new Vector2(0f, 50f));
-                UIFactory.Label(row.transform, "TT", city + "\ndroga ~" + Mathf.RoundToInt(d) + " m | paczkomat, salon, magazyn", 13, Color.white, new Vector2(-10f, 0f), new Vector2(230f, 50f), TextAnchor.MiddleLeft);
+                float d3 = Vector3.Distance(CityUtils.CityPos(city), pp);
+                var row = UIFactory.Panel(list, "R_" + city, new Color(0.16f, 0.22f, 0.28f), Vector2.zero, new Vector2(0f, 48f));
+                UIFactory.Label(row.transform, "TT", city + "\ndroga ~" + Mathf.RoundToInt(d3) + " m", 13, Color.white, new Vector2(-10f, 0f), new Vector2(200f, 48f), TextAnchor.MiddleLeft);
                 bool ziel = c.hasPaczkomat;
-                UIFactory.Label(row.transform, "ST", ziel ? "OK" : "-", 14, ziel ? new Color(0.3f, 1f, 0.5f) : new Color(0.8f, 0.3f, 0.3f), new Vector2(125f, 0f), new Vector2(60f, 50f), TextAnchor.MiddleCenter);
+                UIFactory.Label(row.transform, "ST", ziel ? "OK" : "-", 14, ziel ? new Color(0.3f, 1f, 0.5f) : new Color(0.8f, 0.3f, 0.3f), new Vector2(115f, 0f), new Vector2(50f, 48f), TextAnchor.MiddleCenter);
             }
-            UIFactory.Label(rt, "Podpowiedzi", "Musisz dojechac do miast droga!\nW kazdym miescie: paczkomat, salon, magazyn.", 13, new Color(0.6f, 0.85f, 1f), new Vector2(0f, -530f), new Vector2(330f, 60f), TextAnchor.UpperCenter);
+            UIFactory.Label(rt, "Podpowiedzi", "Jedz miedzy miastami droga!\nW miescie: paczkomat, salon, magazyn,\nBiedronka, sklep GSM.", 12, new Color(0.6f, 0.85f, 1f), new Vector2(0f, -160f), new Vector2(320f, 70f), TextAnchor.UpperCenter);
         }
 
-        // ============ ADMIN ============
+        // ===== ADMIN =====
 
         void AppAdmin()
         {
             var rt = contentT;
             var m = GameManager.I;
-            UIFactory.Label(rt, "Tytul", "ADMIN PANEL", 20, new Color(1f, 0.5f, 0.4f), new Vector2(0f, -30f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
+            UIFactory.Label(rt, "Tytul", "ADMIN PANEL", 20, new Color(1f, 0.5f, 0.4f), new Vector2(0f, 235f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
             if (!m.adminLogged)
             {
-                UIFactory.Label(rt, "TI", "Zaloguj sie:", 16, Color.white, new Vector2(0f, -80f), new Vector2(330f, 40f), TextAnchor.MiddleCenter);
-                var l = UIFactory.Input(rt, "I_Login", "Login", new Color(0.2f, 0.2f, 0.26f), new Vector2(0f, -130f), new Vector2(280f, 44f));
-                var p = UIFactory.Input(rt, "I_Pass", "Haslo", new Color(0.2f, 0.2f, 0.26f), new Vector2(0f, -185f), new Vector2(280f, 44f));
-                p.inputType = InputField.InputType.Password;
-                UIFactory.Btn(rt, "B_Log", "ZALOGUJ", new Color(0.8f, 0.25f, 0.25f), new Vector2(0f, -245f), new Vector2(280f, 46f), () => { TryLogin(l, p); }, 16);
+                UIFactory.Label(rt, "TI", "Zaloguj sie:", 15, Color.white, new Vector2(0f, 195f), new Vector2(330f, 30f), TextAnchor.MiddleCenter);
+                var l = UIFactory.Input(rt, "I_Login", "Login", new Color(0.2f, 0.2f, 0.26f), new Vector2(0f, 145f), new Vector2(280f, 42f));
+                var p2 = UIFactory.Input(rt, "I_Pass", "Haslo", new Color(0.2f, 0.2f, 0.26f), new Vector2(0f, 90f), new Vector2(280f, 42f));
+                p2.inputType = InputField.InputType.Password;
+                UIFactory.Btn(rt, "B_Log", "ZALOGUJ", new Color(0.8f, 0.25f, 0.25f), new Vector2(0f, 30f), new Vector2(280f, 46f), () => { TryLogin(l, p2); }, 15);
             }
             else
             {
-                UIFactory.Label(rt, "TI", "Zalogowany jako: " + ADMIN_LOGIN, 15, new Color(0.5f, 1f, 0.6f), new Vector2(0f, -75f), new Vector2(330f, 30f), TextAnchor.MiddleCenter);
-                UIFactory.Btn(rt, "B_Coins", "+1000 COINS", new Color(0.95f, 0.7f, 0.2f), new Vector2(0f, -120f), new Vector2(270f, 40f), () => GameManager.AdminGiveCoinsSafe(1000), 15);
-                UIFactory.Btn(rt, "B_Cars", "ODBILOKUJ WSZYSTKIE AUTA", new Color(0.3f, 0.7f, 0.9f), new Vector2(0f, -170f), new Vector2(270f, 40f), () => GameManager.AdminUnlockAllSafe(), 13);
-                var ct = UIFactory.Label(rt, "TI2", "TELEPORT:", 15, Color.white, new Vector2(0f, -215f), new Vector2(330f, 30f), TextAnchor.MiddleCenter);
-                int y = 255;
+                UIFactory.Label(rt, "TI", "Zalogowany: " + ADMIN_LOGIN, 14, new Color(0.5f, 1f, 0.6f), new Vector2(0f, 200f), new Vector2(330f, 28f), TextAnchor.MiddleCenter);
+                UIFactory.Btn(rt, "B_Coins", "+1000 COINS", new Color(0.95f, 0.7f, 0.2f), new Vector2(0f, 155f), new Vector2(270f, 38f), () => GameManager.AdminGiveCoinsSafe(1000), 14);
+                UIFactory.Btn(rt, "B_Cars", "ODBLOKUJ WSZYSTKIE AUTA", new Color(0.3f, 0.7f, 0.9f), new Vector2(0f, 110f), new Vector2(270f, 38f), () => GameManager.AdminUnlockAllSafe(), 12);
+                UIFactory.Label(rt, "TI2", "TELEPORT:", 14, Color.white, new Vector2(0f, 70f), new Vector2(330f, 26f), TextAnchor.MiddleCenter);
+                float y = 30f;
                 foreach (var c in Finder.All<CityHub>())
                 {
                     string city = c.cityName;
-                    UIFactory.Btn(rt, "B_TP_" + city, "-> " + city, new Color(0.4f, 0.4f, 0.5f), new Vector2(0f, -y), new Vector2(270f, 34f), () => GameManager.AdminTeleportSafe(city), 13);
-                    y += 40;
+                    UIFactory.Btn(rt, "B_TP_" + city, "-> " + city, new Color(0.4f, 0.4f, 0.5f), new Vector2(0f, y), new Vector2(270f, 32f), () => GameManager.AdminTeleportSafe(city), 12);
+                    y -= 38f;
                 }
-                UIFactory.Btn(rt, "B_Out", "WYLOGUJ", new Color(0.5f, 0.2f, 0.2f), new Vector2(0f, -y), new Vector2(270f, 36f), () => { GameManager.AdminLogoutSafe(); AppAdmin(); }, 14);
+                UIFactory.Btn(rt, "B_Out", "WYLOGUJ", new Color(0.5f, 0.2f, 0.2f), new Vector2(0f, -195f), new Vector2(270f, 36f), () => { GameManager.AdminLogoutSafe(); AppAdmin(); }, 13);
             }
         }
 
