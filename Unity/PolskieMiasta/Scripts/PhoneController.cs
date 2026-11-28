@@ -160,10 +160,17 @@ namespace Miasta
             contentT = appT;
             appGO.SetActive(true);
             foreach (Transform c in contentT) Destroy(c.gameObject);
-            if (which == "paczki") AppPaczkiRoot();
-            else if (which == "sklep") AppSklep();
-            else if (which == "mapa") AppMapa();
-            else if (which == "admin") AppAdmin();
+            try
+            {
+                if (which == "paczki") AppPaczkiRoot();
+                else if (which == "sklep") AppSklep();
+                else if (which == "mapa") AppMapa();
+                else if (which == "admin") AppAdmin();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("BLAD APLIKACJI '" + which + "': " + e.Message + "\n" + e.StackTrace);
+            }
             AddAppCloseBtn();
         }
 
