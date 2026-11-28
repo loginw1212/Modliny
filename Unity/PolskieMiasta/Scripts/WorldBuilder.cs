@@ -25,10 +25,10 @@ namespace Miasta
 
         public static void Build(bool rebuild = false)
         {
-            var ready = GameObject.Find("Polskie_Miasta_v4");
+            var ready = GameObject.Find("Polskie_Miasta_v5");
             if (ready != null && !rebuild) return;
             // usuwamy KAZDA stara wersje swiata (stara mapa zawsze podmieniana)
-            foreach (var name in new string[] { "Polskie_Miasta", "Polskie_Miasta_v2", "Polskie_Miasta_v3", "Polskie_Miasta_v4" })
+            foreach (var name in new string[] { "Polskie_Miasta", "Polskie_Miasta_v2", "Polskie_Miasta_v3", "Polskie_Miasta_v5", "Polskie_Miasta_v5" })
             {
                 var go = GameObject.Find(name);
                 if (go != null) Object.DestroyImmediate(go);
@@ -38,7 +38,7 @@ namespace Miasta
 
             MakeMaterials();
 
-            var world = new GameObject("Polskie_Miasta_v4");
+            var world = new GameObject("Polskie_Miasta_v5");
             Ground(world.transform);
             Roads(world.transform);
             foreach (var d in defs) City(world.transform, d);
@@ -236,6 +236,7 @@ namespace Miasta
             hub.hasPaczkomat = true;
             np.transform.SetParent(p);
             np.transform.position = d.pos;
+            Debug.Log("MIASTO POSTAWIONE: " + d.display + " -> pozycja (" + d.pos.x + ", " + d.pos.z + ")");
             var t = np.transform;
             float half = d.big ? 340f : 280f;
             var rng = new System.Random(d.id.GetHashCode());

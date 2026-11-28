@@ -16,13 +16,13 @@ namespace MiastaEditor
         static void BuildOnce()
         {
             if (Application.isPlaying) return;
-            var ready = GameObject.Find("Polskie_Miasta_v4");
+            var ready = GameObject.Find("Polskie_Miasta_v5");
             if (ready != null)
             {
                 return; // mapa juz jest w scenie zapisana - nic nie rob
             }
             Miasta.WorldBuilder.Build();
-            if (GameObject.Find("Polskie_Miasta_v4") == null) return;
+            if (GameObject.Find("Polskie_Miasta_v5") == null) return;
 
             var scene = EditorSceneManager.GetActiveScene();
             EditorSceneManager.MarkSceneDirty(scene);
